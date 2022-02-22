@@ -15,19 +15,53 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="157dp"
-        android:layout_height="146dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="105dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/etFirstName"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/border"
+        android:hint="@string/prompt_first_name"
+        android:imeActionLabel="@string/First_name"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textColorHint="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <EditText
+        android:id="@+id/etLastName"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:hint="@string/prompt_last_name"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textColorHint="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+
+    <EditText
         android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/border"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
@@ -37,7 +71,7 @@
         android:textColorHint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/etLastName" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -56,28 +90,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+    <EditText
+        android:id="@+id/etRepeatpassword"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/prompt_repeat_password"
+        android:textColorHint="@color/orange"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:textColor="@color/orange"
+        android:textAlignment="center"
+        android:background="@drawable/border"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+    <Button
+        android:id="@+id/btnRegister"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginBottom="64dp"
         android:enabled="false"
-        android:text="@string/action_sign_in_short"
+        android:text="@string/Register"
         android:textColor="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:layout_constraintVertical_bias="0.128"
+        app:layout_constraintTop_toBottomOf="@+id/etRepeatpassword"
+
+        app:layout_constraintVertical_bias="0.126"
         app:strokeColor="@color/orange"
-        app:strokeWidth="2dp" />
-
-
+        app:strokeWidth="2dp"
+        tools:clickable="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -87,27 +138,25 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin">
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister">
 
         <TextView
-            android:id="@+id/tvNo_account"
+            android:id="@+id/tvHas_account"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:padding="5dp"
-            android:text="@string/No_account"
+            android:text="@string/Has_account"
             android:textColor="@color/orange" />
 
         <TextView
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnLog_in"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:cursorVisible="true"
             android:foreground="?attr/selectableItemBackground"
             android:padding="5dp"
-            android:text="@string/Register"
+            android:text="@string/action_sign_in_short"
             android:textColor="@color/orange"
             android:textColorLink="@color/orange"
             android:textStyle="bold" />
