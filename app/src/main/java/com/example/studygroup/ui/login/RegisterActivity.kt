@@ -1,39 +1,37 @@
  package com.example.studygroup.ui.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
-import android.widget.Button
 import android.widget.Toast
-import com.example.studygroup.R
+import com.example.studygroup.Main.MainActivity
 import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import org.jetbrains.annotations.NotNull
+
 
  class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
      private lateinit var mAuth: FirebaseAuth
-     private lateinit var mUser: FirebaseUser
      private lateinit var FirstName:String
      private lateinit var LastName:String
      private lateinit var Email:String
      private lateinit var Password:String
      private lateinit var RepeatPassword:String
+     private lateinit var User :FirebaseUser
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         mAuth = FirebaseAuth.getInstance()
         binding.btnRegister.setOnClickListener {
-            Toast.makeText(this,"Chala",Toast.LENGTH_LONG).show()
+
             if (ValidateInput())
             {
                 if(ValidateCredentials())
@@ -43,9 +41,20 @@ import org.jetbrains.annotations.NotNull
             }
 
         }
+
+
+
     }
 
-
+     fun LaunchMainActivity()
+     {
+         val intent = Intent(this,MainActivity::class.java)
+         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+         intent.putExtra("UserId",User.uid)
+         intent.putExtra("Email",Email)
+         startActivity(intent)
+         finish()
+     }
      fun ValidateCredentials():Boolean
      {
          if(Patterns.EMAIL_ADDRESS.matcher(Email).matches())
@@ -82,7 +91,7 @@ import org.jetbrains.annotations.NotNull
          LastName = binding.etLastName.text.toString().trim{it <=' '}
          Email = binding.etEmail.text.toString().trim{it <=' '}
          Password= binding.etPassword.text.toString().trim{it <=' '}
-         RepeatPassword = binding.etRepeatpassword.text.toString().trim{it <=' '}
+         RepeatPassword = binding.etRepeatPassword.text.toString().trim{it <=' '}
          when {
              TextUtils.isEmpty(Email)-> {
                  Toast.makeText(this, "Please Enter email", Toast.LENGTH_SHORT).show()
@@ -111,16 +120,20 @@ import org.jetbrains.annotations.NotNull
          }
          return false
      }
-     fun FirebaseSignUp(Email: String, Password: String)
-     {
+     fun FirebaseSignUp(Email: String, Password: String){
          mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener { task ->
              if (task.isSuccessful)
              {
+                 User = task.result!!.user!!
                  Toast.makeText(this,"Registration Successfull!",Toast.LENGTH_SHORT).show()
+                 LaunchMainActivity()
+
              }
              else
              {
+
                  Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()
+
              }
          }
      }
