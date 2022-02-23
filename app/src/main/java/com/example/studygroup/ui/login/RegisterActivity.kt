@@ -11,6 +11,7 @@ import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import org.jetbrains.annotations.NotNull
 
  class RegisterActivity : AppCompatActivity() {
 
@@ -27,11 +28,7 @@ import com.google.firebase.auth.FirebaseUser
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        FirstName= binding.etFirstName.text.toString().trim{it <=' '}
-         LastName = binding.etLastName.text.toString().trim{it <=' '}
-         Email = binding.etEmail.text.toString().trim{it <=' '}
-         Password= binding.etPassword.text.toString().trim{it <=' '}
-         RepeatPassword = binding.etRepeatpassword.text.toString().trim{it <=' '}
+
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -81,8 +78,13 @@ import com.google.firebase.auth.FirebaseUser
      }
      fun ValidateInput():Boolean
      {
+         FirstName= binding.etFirstName.text.toString().trim{it <=' '}
+         LastName = binding.etLastName.text.toString().trim{it <=' '}
+         Email = binding.etEmail.text.toString().trim{it <=' '}
+         Password= binding.etPassword.text.toString().trim{it <=' '}
+         RepeatPassword = binding.etRepeatpassword.text.toString().trim{it <=' '}
          when {
-             TextUtils.isEmpty(Email) -> {
+             TextUtils.isEmpty(Email)-> {
                  Toast.makeText(this, "Please Enter email", Toast.LENGTH_SHORT).show()
                  return false
              }
