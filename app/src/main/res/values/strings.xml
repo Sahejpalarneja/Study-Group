@@ -1,21 +1,26 @@
 <resources>
-    <string name="app_name">Study Group</string>
+    <string name="app_name">Master Minds</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="prompt_repeat_password">Repeat Password</string>
+    <string name="prompt_first_name">Enter first name</string>
+    <string name="prompt_last_name">Enter last name</string>
+    <string name="Register">Register</string>
+    <string name="action_sign_in_short">Log in</string>
+    <string name="No_account">Don\'t have account?</string>
+    <string name="Has_account">Already have an account?</string>
     <string name="welcome">"Welcome !"</string>
+    <string name="First_name">First Name</string>
+    <string name="Last_name">Last Name</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--Strings related to Main Screen-->
+    <string name="find_class">Find a Class</string>
+    <string name="subject_code">Subject Code</string>
+
+
 </resources>
