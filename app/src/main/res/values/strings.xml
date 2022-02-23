@@ -21,6 +21,7 @@
     <!--Strings related to Main Screen-->
     <string name="find_class">Find a Class</string>
     <string name="subject_code">Subject Code</string>
+    <string name="logo">Logo</string>
 
 
 </resources>
