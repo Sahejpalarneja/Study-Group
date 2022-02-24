@@ -22,6 +22,8 @@
     <string name="find_class">Find a Class</string>
     <string name="subject_code">Subject Code</string>
     <string name="logo">Logo</string>
+    <!--Database-->
+    <string name="database_connection_string">https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/</string>
 
 
 </resources>
