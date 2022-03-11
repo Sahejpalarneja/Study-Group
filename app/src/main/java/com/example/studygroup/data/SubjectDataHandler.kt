@@ -11,14 +11,45 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 class SubjectDataHandler {
+    private var  Subjects = ArrayList<Subjects>()
+    val database = Firebase.database("https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/")
+    private fun InitializeSubjects(){
+        val ref = database.getReference("Subjects")
+        ref.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot){
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                val subjects = snapshot.children.iterator()
+                while (subjects.hasNext())
+                {
+                    var neptun = subjects.next().key.toString()
+                    var subject = subjects.next().child(neptun)
+                    var professors = subject.child("professors").value
+                    var name = subject.child("name").value.toString()
+                    var students = subject.child("students").value
 
+                    Subjects.add(Subjects(neptun,name,
+                        professors as ArrayList<String>,
+                        students as ArrayList<String>
+                    ))
+
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+    }
 
 companion object {
-
     val database = Firebase.database("https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/")
-    var ref = database.getReference("Subjects").child("0").child("NEPTUN").child("name")
+    var ref = database.getReference("Subjects")
     public lateinit var value :String
     public fun ReadFromDataBase(){
         ref.addValueEventListener(object : ValueEventListener {
@@ -26,10 +57,25 @@ companion object {
             override fun onDataChange(snapshot: DataSnapshot){
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                val subjects = snapshot.children.iterator()
+                while (subjects.hasNext())
+                {
+                    var subject: DataSnapshot
+                    try{
+                        subject = subjects.next().child("NEPTUN")
+                    }
+                    catch (e :Exception)
+                    {
+                        subject = subjects.next().child("NEPTUN2")
+                    }
 
-                value = snapshot.getValue<String>().toString()
-                System.out.println(value)
-                Log.d(TAG,"This is it: "+value)
+
+                    Log.i("Subject Info","name"+subject.child("name").value.toString())
+
+
+
+                }
+
 
             }
 
@@ -39,6 +85,9 @@ companion object {
 
         })
     }
-}
+
+
+    }
+
 
 }

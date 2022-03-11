@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 
-//import com.example.studygroup.data.SubjectDataHandler
+import com.example.studygroup.data.SubjectDataHandler
 //import com.example.studygroup.R
 import com.example.studygroup.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
+    private val subjectHandler :SubjectDataHandler
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity(){
          binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
              android.widget.SearchView.OnQueryTextListener {
              override fun onQueryTextSubmit(query: String?): Boolean {
-                 Toast.makeText(this@MainActivity,"Changed",Toast.LENGTH_SHORT).show()
+                 //Toast.makeText(this@MainActivity,"Changed",Toast.LENGTH_SHORT).show()
+                 SubjectDataHandler.ReadFromDataBase()
                  return true
              }
 
              override fun onQueryTextChange(newText: String?): Boolean {
-                 Toast.makeText(this@MainActivity,"Submitted",Toast.LENGTH_SHORT).show()
+                 //Toast.makeText(this@MainActivity,"Submitted",Toast.LENGTH_SHORT).show()
+                 SubjectDataHandler.ReadFromDataBase()
                  return true
              }
          })
