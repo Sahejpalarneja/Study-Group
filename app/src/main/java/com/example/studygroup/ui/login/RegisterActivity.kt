@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
-import com.example.studygroup.Main.MainActivity
+import com.example.studygroup.main.MainActivity
 import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
