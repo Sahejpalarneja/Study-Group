@@ -19,11 +19,18 @@
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
     <!--Strings related to Main Screen-->
-    <string name="find_class">Find a Class</string>
+    <string name="find_class">Join a Class!</string>
     <string name="subject_code">Subject Code</string>
     <string name="logo">Logo</string>
     <!--Database-->
     <string name="database_connection_string">https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/</string>
-
+    <string name="Subjects">Subjects</string>
+    <!--Strings related to Subjects-->
+    <string name="Subject">Subject Name</string>
+    <string name="Subject_code">Subject Code</string>
+    <string name="Professor">Professor</string>
+    <string name="Members">No. of Members</string>
+    <!--utils-->
+    <string name="Search">Search</string>
 
 </resources>
