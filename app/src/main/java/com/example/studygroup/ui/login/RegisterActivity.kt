@@ -41,6 +41,11 @@ import com.google.firebase.auth.FirebaseUser
             }
 
         }
+         binding.btnLogIn.setOnClickListener{
+             var intent = Intent()
+             intent.setClass(this,LoginActivity::class.java)
+             startActivity(intent)
+         }
 
 
 
