@@ -32,5 +32,6 @@
     <string name="Members">No. of Members</string>
     <!--utils-->
     <string name="Search">Search</string>
+    <string name="Join">Join</string>
 
 </resources>
