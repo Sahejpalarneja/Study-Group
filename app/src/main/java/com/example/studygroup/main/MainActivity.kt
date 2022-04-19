@@ -32,11 +32,6 @@ class MainActivity : AppCompatActivity(){
         setContentView(binding.root)
 
        SubjectDataHandler.InitializeSubjects()
-
-
-
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@color/black"
+    android:background="@color/orange"
     android:elevation="8dp"
     app:cardCornerRadius="8dp">
 
@@ -15,23 +15,16 @@
         <LinearLayout
             android:id="@+id/SubjectNameLayout"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:orientation="horizontal">
             <!--text view for our course name-->
-            <TextView
-                android:id="@+id/SubjectNameLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/Subject"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvSubjectName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -41,77 +34,62 @@
         <LinearLayout
             android:id="@+id/SubjectCodeLayout"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_below="@id/SubjectNameLayout"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/SubjectCodeLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/Subject_code"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/tvSubjectCode"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:padding="5dp"
+                android:textSize="18sp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
                 android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ProfessorLayout"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_below="@id/SubjectCodeLayout"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfessorLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/Professor"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/tvProfessor"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-
-                android:textColor="@color/white" />
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/MemberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_below="@id/ProfessorLayout"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/MembersLabel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
                 android:text="@string/Members"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvMembers"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:padding="5dp"
-
-                android:textColor="@color/white" />
+                android:paddingStart="5dp"
+                android:paddingTop = "5dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
     </RelativeLayout>
