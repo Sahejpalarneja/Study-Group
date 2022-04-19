@@ -29,22 +29,21 @@ class SubjectAdapter(private val context : Context,subjects: List<Subjects>) :Re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = subjects[position]
         val members = getMemberCount(currentItem.students)
-        var name  = currentItem.name
-        holder.binding.tvSubjectName.text = name
-        var subjectCode = currentItem.NEPTUN
-        holder.binding.tvSubjectCode.text = subjectCode
+        holder.binding.tvSubjectName.text = currentItem.name
+        holder.binding.tvSubjectCode.text = currentItem.NEPTUN
         holder.binding.tvProfessor.text = currentItem.professors[0]
         holder.binding.tvMembers.text =members.toString()
 
     }
 
-    inner class  ViewHolder(val binding : SubjectCardBinding):RecyclerView.ViewHolder(binding.root){
+    inner class  ViewHolder(val binding : SubjectCardBinding):RecyclerView.ViewHolder(binding.root) {
 
     }
 
     private fun getMemberCount(members:ArrayList<String>):Int {
         return members.size
     }
+
 }
 
 
