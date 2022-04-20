@@ -23,6 +23,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var Password:String
     private lateinit var User:FirebaseUser
 
+    override fun onStart() {
+        super.onStart()
+        val currentUser = mAuth.currentUser
+        if(currentUser != null)
+        {
+            LaunchMainActivity()
+
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         val user = UserDataHandler.getUser(User.uid)
         intent.putExtra("UserID",user.UserID)
         intent.putExtra("Username",user.Username)
-        intent.putExtra("Classes",user.Classes)
+        //intent.putExtra("Classes",user.Classes)
 
         startActivity(intent)
         finish()
