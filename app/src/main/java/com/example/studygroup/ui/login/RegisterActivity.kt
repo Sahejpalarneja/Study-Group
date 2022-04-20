@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
+import com.example.studygroup.data.User
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+
+import com.example.studygroup.data.UserDataHandler
 
 
  class RegisterActivity : AppCompatActivity() {
@@ -55,8 +58,12 @@ import com.google.firebase.auth.FirebaseUser
      {
          val intent = Intent(this,MainActivity::class.java)
          intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-         intent.putExtra("UserId",User.uid)
-         intent.putExtra("Email",Email)
+         val user = User(User.uid,Email,FirstName,LastName)
+         intent.putExtra("UserID",user.UserID)
+         intent.putExtra("Email",user.email)
+         intent.putExtra("FirstName",user.FirstName)
+         intent.putExtra("LastName",user.LastName)
+         UserDataHandler.writeUser(user)
          startActivity(intent)
          finish()
      }
@@ -131,6 +138,7 @@ import com.google.firebase.auth.FirebaseUser
              {
                  User = task.result!!.user!!
                  Toast.makeText(this,"Registration Successfull!",Toast.LENGTH_SHORT).show()
+
                  LaunchMainActivity()
 
              }
