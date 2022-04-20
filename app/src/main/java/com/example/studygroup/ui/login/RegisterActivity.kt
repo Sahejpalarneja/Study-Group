@@ -45,7 +45,7 @@ import com.example.studygroup.data.UserDataHandler
 
         }
          binding.btnLogIn.setOnClickListener{
-             var intent = Intent()
+             val intent = Intent()
              intent.setClass(this,LoginActivity::class.java)
              startActivity(intent)
          }
@@ -58,11 +58,11 @@ import com.example.studygroup.data.UserDataHandler
      {
          val intent = Intent(this,MainActivity::class.java)
          intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-         val user = User(User.uid,Email,FirstName,LastName)
+         val username = FirstName+" "+LastName
+         val user = User(User.uid,username, ArrayList<String>())
          intent.putExtra("UserID",user.UserID)
-         intent.putExtra("Email",user.email)
-         intent.putExtra("FirstName",user.FirstName)
-         intent.putExtra("LastName",user.LastName)
+         intent.putExtra("Username",user.Username)
+         intent.putExtra("Classes",user.Classes)
          UserDataHandler.writeUser(user)
          startActivity(intent)
          finish()

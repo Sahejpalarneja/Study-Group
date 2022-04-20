@@ -53,8 +53,10 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val user = UserDataHandler.getUser(User.uid)
-        intent.putExtra("UserId",User.uid)
-        intent.putExtra("Email",Email)
+        intent.putExtra("UserID",user.UserID)
+        intent.putExtra("Username",user.Username)
+        intent.putExtra("Classes",user.Classes)
+
         startActivity(intent)
         finish()
     }
