@@ -1,19 +1,12 @@
 package com.example.studygroup.main
-
-
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-//import android.view.Menu
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
 import com.example.studygroup.R
-
 import com.example.studygroup.data.SubjectDataHandler
-//import com.example.studygroup.R
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
 
