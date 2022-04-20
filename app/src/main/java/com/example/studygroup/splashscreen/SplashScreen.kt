@@ -11,6 +11,7 @@ import com.example.studygroup.ui.login.LoginActivity
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)

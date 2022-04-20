@@ -20,7 +20,7 @@ class UserDataHandler {
         }
         fun getUser(UserID:String):User
         {
-            //var currentUser= User("","",ArrayList<String>())
+            var currentUser= User("","",ArrayList<String>())
             ref.addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val users = snapshot.children.iterator()
@@ -31,7 +31,7 @@ class UserDataHandler {
                         {
                             val name  = users.next().child("Username").value.toString()
                             val classes = users.next().child("Classes").value
-                            //currentUser = User(ID,name,classes as ArrayList<String>)
+                            currentUser = User(ID,name,classes as ArrayList<String>)
                         }
 
                     }
@@ -41,7 +41,7 @@ class UserDataHandler {
                     Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
                 }
             })
-            return User("","",ArrayList<String>())
+            return currentUser
         }
     }
 }
