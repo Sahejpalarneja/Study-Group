@@ -24,7 +24,9 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       SubjectDataHandler.InitializeSubjects()
+        SubjectDataHandler.InitializeSubjects()
+        val username = intent.getStringExtra("Username")
+        Toast.makeText(this,username,Toast.LENGTH_LONG).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

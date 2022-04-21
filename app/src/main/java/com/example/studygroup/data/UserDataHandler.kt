@@ -20,7 +20,8 @@ class UserDataHandler {
         }
         fun getUser(UserID:String):User
         {
-            var currentUser= User("","",ArrayList<String>())
+            val list = arrayListOf<String>("NEPTUN")
+            var currentUser= User("AFA1bYYLV1WYvjhVPXOXSfCHAQe2","test",list)
             ref.addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val users = snapshot.children.iterator()

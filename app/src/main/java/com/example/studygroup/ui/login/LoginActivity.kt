@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         if(currentUser != null)
         {
+            User = currentUser
             LaunchMainActivity()
 
 
@@ -65,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         val user = UserDataHandler.getUser(User.uid)
         intent.putExtra("UserID",user.UserID)
         intent.putExtra("Username",user.Username)
-        //intent.putExtra("Classes",user.Classes)
+        intent.putExtra("Classes",user.Classes)
 
         startActivity(intent)
         finish()
