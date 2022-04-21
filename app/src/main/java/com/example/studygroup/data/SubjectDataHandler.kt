@@ -57,7 +57,6 @@ class SubjectDataHandler {
                 val temp = i.NEPTUN
                 if(code == i.NEPTUN)
                 {
-
                     return true
                 }
             }
