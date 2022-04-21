@@ -31,9 +31,9 @@ class SubjectDataHandler {
                         var subject= listOf(subjects.next().children)[0]
 
 
-                        for(neptun in subject)
-                        {
-                            var code:String? = neptun.key
+                        for(neptun in subject) {
+                            var code: String = neptun.key.toString()
+                            if (checkDuplicate(code)) break
                             var name :String? = neptun.child("name").value.toString()
                             var professors = neptun.child("professors").value
                             var students = neptun.child("students").value
@@ -45,6 +45,23 @@ class SubjectDataHandler {
                     Log.w(TAG, "Failed to read value.", error.toException())
                 }
             })
+        }
+        fun checkDuplicate(code:String):Boolean
+        {
+            if(Subjects.isEmpty())
+            {
+                return false
+            }
+            for(i in Subjects)
+            {
+                val temp = i.NEPTUN
+                if(code == i.NEPTUN)
+                {
+
+                    return true
+                }
+            }
+            return false
         }
         fun FindSubject(query:String){
             for(subject in Subjects)
