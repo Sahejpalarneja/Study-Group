@@ -5,13 +5,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.R
+import com.example.studygroup.adapters.UserClassesAdapter
 import com.example.studygroup.data.SubjectDataHandler
+import com.example.studygroup.data.Subjects
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
+    private lateinit var classes : ArrayList<Subjects>
+    private lateinit var classesRV : RecyclerView
+    private lateinit var adapter : UserClassesAdapter
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -19,14 +26,14 @@ class MainActivity : AppCompatActivity(){
         return true
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        classesRV = binding.recyclerItem
+        buildRecyclerView()
 
-        SubjectDataHandler.InitializeSubjects()
-        val username = intent.getStringExtra("Username")
-        Toast.makeText(this,username,Toast.LENGTH_LONG).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -35,6 +42,16 @@ class MainActivity : AppCompatActivity(){
         startActivity(intent)
         return true
 
+    }
+    private fun buildRecyclerView()
+    {
+        val userClasses = intent.getStringArrayListExtra("Classes")
+        classes = SubjectDataHandler.getUserClasses(userClasses)
+        adapter = UserClassesAdapter(this,classes)
+
+       val manager = LinearLayoutManager(this)
+        classesRV.layoutManager = manager
+        classesRV.adapter = adapter
     }
 
 }
