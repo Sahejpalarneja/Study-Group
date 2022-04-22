@@ -5,6 +5,7 @@ package com.example.studygroup.data
 import android.content.ContentValues.TAG
 
 import android.util.Log
+import android.widget.Toast
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +22,7 @@ class SubjectDataHandler {
         val database = Firebase.database("https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/")
         val ref = database.getReference("Subjects")
 
-        fun InitializeSubjects(){
+        fun InitializeSubjects() {
 
             ref.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot){
@@ -45,6 +46,7 @@ class SubjectDataHandler {
                     Log.w(TAG, "Failed to read value.", error.toException())
                 }
             })
+
         }
         fun checkDuplicate(code:String):Boolean
         {
@@ -71,7 +73,21 @@ class SubjectDataHandler {
                 }
             }
         }
-
+        fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subjects> {
+            val result = ArrayList<Subjects>()
+            if (userClasses != null) {
+                var tt = Subjects
+                for(i in userClasses) {
+                    for(j in Subjects) {
+                        var temp = j.NEPTUN.toString()
+                        if (i == j.NEPTUN.toString()) {
+                            result.add(j)
+                        }
+                    }
+                }
+            }
+            return result
+        }
     }
 
 
