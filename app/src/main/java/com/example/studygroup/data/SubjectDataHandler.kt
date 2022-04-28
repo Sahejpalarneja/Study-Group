@@ -29,24 +29,17 @@ class SubjectDataHandler {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val subjects = snapshot.children.iterator()
                     while (subjects.hasNext()) {
-                        var subject = listOf(subjects.next().children)[0]
-
-
-                        for (neptun in subject) {
-                            var code: String = neptun.key.toString()
-                            if (checkDuplicate(code)) break
-                            var name: String? = neptun.child("name").value.toString()
-                            var professors = neptun.child("professors").value
-                            var students = neptun.child("students").value
-                            Subjects.add(
-                                Subjects(
-                                    code ,
-                                    name as String,
-                                    professors as ArrayList<String>,
-                                    students as ArrayList<String>
-                                )
-                            )
-                        }
+                        var subject =subjects.next()
+                        var code = subject.child("neptun").value
+                        var name = subject.child("name").value
+                        var professors = subject.child("professors").value
+                        var students = subject.child("students").value// listOf(subjects.next().children)[0]
+                        Subjects.add(Subjects(
+                            code.toString(),
+                            name.toString(),
+                            professors as ArrayList<String>,
+                            students as ArrayList<String>
+                        ))
                     }
                 }
 
@@ -93,6 +86,15 @@ class SubjectDataHandler {
                 }
             }
             return result
+        }
+
+        fun writeSubject(newSubject:Subjects)
+        {
+            Subjects.add(newSubject)
+            System.out.println(Subjects)
+            System.out.println("PAUse")
+
+            ref.setValue(Subjects)
         }
     }
 
