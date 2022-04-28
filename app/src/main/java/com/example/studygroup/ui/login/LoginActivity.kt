@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
+import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.data.UserDataHandler
 import com.example.studygroup.main.MainActivity
 
@@ -29,6 +30,8 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null)
         {
             User = currentUser
+            val user = UserDataHandler.getUser(User.uid)
+            SubjectUserUtils.setUser(user)
             LaunchMainActivity()
 
 
@@ -64,9 +67,8 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val user = UserDataHandler.getUser(User.uid)
-        intent.putExtra("UserID",user.UserID)
-        intent.putExtra("Username",user.Username)
-        intent.putExtra("Classes",user.Classes)
+        SubjectUserUtils.setUser(user)
+
 
         startActivity(intent)
         finish()
