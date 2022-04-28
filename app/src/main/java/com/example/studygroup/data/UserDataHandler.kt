@@ -2,6 +2,8 @@ package com.example.studygroup.data
 
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
+import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -15,8 +17,8 @@ class UserDataHandler {
         val ref = database.getReference("Users")
 
         fun writeUser(user: User) {
-            ref.child(user.UserID).child("Username").setValue(user.Username)
-            ref.child(user.UserID).child("Classes").setValue(ArrayList<String>())
+            user.UserID?.let { ref.child(it).child("Username").setValue(user.Username) }
+            user.UserID?.let { ref.child(it).child("Classes").setValue(ArrayList<String>()) }
         }
         fun getUser(UserID:String):User
         {
@@ -34,15 +36,30 @@ class UserDataHandler {
                             val classes = users.next().child("Classes").value
                             currentUser = User(ID,name,classes as ArrayList<String>)
                         }
-
                     }
-
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
                 }
             })
             return currentUser
+        }
+
+        fun joinClass(userID:String?,NEPTUN:String,enrolledClasses:ArrayList<String>?):Boolean
+        {
+            enrolledClasses?.add(NEPTUN)
+            if (userID != null) {
+                ref.child(userID).child("Classes").setValue(enrolledClasses)
+                SubjectUserUtils.setUser(User(userID,SubjectUserUtils.getUser().Username,enrolledClasses))
+                return true
+            }
+            else{
+                //TODO add a error message
+            }
+            return false
+
+
+
         }
     }
 }

@@ -3,6 +3,7 @@
 package com.example.studygroup.data
 
 import android.content.ContentValues.TAG
+import com.example.studygroup.ButtonActivities.SubjectUserUtils
 
 import android.util.Log
 import android.widget.Toast
@@ -25,27 +26,35 @@ class SubjectDataHandler {
         fun InitializeSubjects() {
 
             ref.addValueEventListener(object:ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot){
+                override fun onDataChange(snapshot: DataSnapshot) {
                     val subjects = snapshot.children.iterator()
-                    while (subjects.hasNext())
-                    {
-                        var subject= listOf(subjects.next().children)[0]
+                    while (subjects.hasNext()) {
+                        var subject = listOf(subjects.next().children)[0]
 
 
-                        for(neptun in subject) {
+                        for (neptun in subject) {
                             var code: String = neptun.key.toString()
                             if (checkDuplicate(code)) break
-                            var name :String? = neptun.child("name").value.toString()
+                            var name: String? = neptun.child("name").value.toString()
                             var professors = neptun.child("professors").value
                             var students = neptun.child("students").value
-                            Subjects.add(Subjects(code as String,name as String, professors as ArrayList<String>, students as ArrayList<String>))
+                            Subjects.add(
+                                Subjects(
+                                    code as String,
+                                    name as String,
+                                    professors as ArrayList<String>,
+                                    students as ArrayList<String>
+                                )
+                            )
                         }
                     }
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(TAG, "Failed to read value.", error.toException())
                 }
             })
+            SubjectUserUtils.setSubjects(Subjects)
 
         }
         fun checkDuplicate(code:String):Boolean

@@ -7,18 +7,23 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
 import com.example.studygroup.data.SubjectDataHandler
 import com.example.studygroup.data.Subjects
+import com.example.studygroup.data.User
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
-    private lateinit var classes : ArrayList<Subjects>
+    private  lateinit var classes : ArrayList<Subjects>
     private lateinit var classesRV : RecyclerView
     private lateinit var adapter : UserClassesAdapter
+
+    private var userClasses :ArrayList<String>? = null
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,8 +36,12 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userClasses = SubjectUserUtils.getUser().Classes
+
+
         classesRV = binding.recyclerItem
-        buildRecyclerView()
+        buildRecyclerView(userClasses)
 
     }
 
@@ -43,9 +52,8 @@ class MainActivity : AppCompatActivity(){
         return true
 
     }
-    private fun buildRecyclerView()
+    private fun buildRecyclerView(userClasses:ArrayList<String>?)
     {
-        val userClasses = intent.getStringArrayListExtra("Classes")
         classes = SubjectDataHandler.getUserClasses(userClasses)
         adapter = UserClassesAdapter(this,classes)
 
