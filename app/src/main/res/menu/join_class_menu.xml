@@ -3,9 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/action_deleteall"
+        android:id="@+id/find_class"
         android:orderInCategory="100"
         android:title="@string/find_class"
         app:showAsAction="always"/>
+    <item android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never"/>
 
 </menu>

@@ -15,6 +15,9 @@ import com.example.studygroup.data.Subjects
 import com.example.studygroup.data.User
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
+import com.example.studygroup.ui.login.LoginActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
@@ -46,11 +49,22 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val intent = Intent()
-        intent.setClass(this,FindClassActivity::class.java)
-        startActivity(intent)
-        return true
+        if(item.itemId == R.id.find_class)
+        { val intent = Intent()
+            intent.setClass(this,FindClassActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        else if(item.itemId == R.id.logout)
+        {
+            Firebase.auth.signOut()
+            val intent = Intent()
+            intent.setClass(this,LoginActivity::class.java)
+            startActivity(intent)
+            return true
+        }
 
+    return true
     }
     private fun buildRecyclerView(userClasses:ArrayList<String>?)
     {
