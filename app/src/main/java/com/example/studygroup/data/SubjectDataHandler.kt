@@ -85,10 +85,8 @@ class SubjectDataHandler {
         fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subjects> {
             val result = ArrayList<Subjects>()
             if (userClasses != null) {
-                var tt = Subjects
                 for(i in userClasses) {
                     for(j in Subjects) {
-                        var temp = j.NEPTUN.toString()
                         if (i == j.NEPTUN.toString()) {
                             result.add(j)
                         }
