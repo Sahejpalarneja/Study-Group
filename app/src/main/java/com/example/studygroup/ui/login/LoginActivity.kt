@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
 
-    //private lateinit var loginViewModel: LoginViewModel
+
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var mAuth: FirebaseAuth
@@ -66,8 +66,7 @@ class LoginActivity : AppCompatActivity() {
     {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val user = UserDataHandler.getUser(User.uid)
-        SubjectUserUtils.setUser(user)
+
 
 
         startActivity(intent)
@@ -104,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
                 User = task.result!!.user!!
                 Toast.makeText(this,"Login Successfull!",Toast.LENGTH_SHORT).show()
                 val user = UserDataHandler.getUser(User.uid)
+                SubjectUserUtils.setUser(user)
                 LaunchMainActivity()
 
             }

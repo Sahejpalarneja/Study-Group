@@ -40,7 +40,7 @@ class SubjectDataHandler {
                             var students = neptun.child("students").value
                             Subjects.add(
                                 Subjects(
-                                    code as String,
+                                    code ,
                                     name as String,
                                     professors as ArrayList<String>,
                                     students as ArrayList<String>
@@ -65,7 +65,6 @@ class SubjectDataHandler {
             }
             for(i in Subjects)
             {
-                val temp = i.NEPTUN
                 if(code == i.NEPTUN)
                 {
                     return true
@@ -85,10 +84,8 @@ class SubjectDataHandler {
         fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subjects> {
             val result = ArrayList<Subjects>()
             if (userClasses != null) {
-                var tt = Subjects
                 for(i in userClasses) {
                     for(j in Subjects) {
-                        var temp = j.NEPTUN.toString()
                         if (i == j.NEPTUN.toString()) {
                             result.add(j)
                         }
