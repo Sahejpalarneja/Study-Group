@@ -23,18 +23,22 @@ class UserDataHandler {
         fun getUser(UserID:String):User
         {
             val list = arrayListOf<String>()
-            var currentUser= User("AFA1bYYLV1WYvjhVPXOXSfCHAQe2","test",list)
+            var currentUser: User = User("AFA1bYYLV1WYvjhVPXOXSfCHAQe2","test",list)
             ref.addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val users = snapshot.children.iterator()
                     while(users.hasNext())
                     {
-                        val ID = users.next().key.toString()
+                        var user = users.next()
+                        val ID = user.key.toString()
                         if(ID.equals(UserID))
                         {
-                            val name  = users.next().child("Username").value.toString()
-                            val classes = users.next().child("Classes").value
+                            val name  = user.child("Username").value.toString()
+                            System.out.println(name)
+                            val classes = user.child("Classes").value
+                            System.out.println(classes)
                             currentUser = User(ID,name,classes as ArrayList<String>)
+                            break
                         }
                     }
                 }

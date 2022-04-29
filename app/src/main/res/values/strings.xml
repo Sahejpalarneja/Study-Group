@@ -34,5 +34,6 @@
     <!--utils-->
     <string name="Search">Search</string>
     <string name="Join">Join</string>
+    <string name="add_subject">Add a Subject</string>
 
 </resources>

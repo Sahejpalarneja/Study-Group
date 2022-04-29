@@ -11,6 +11,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studygroup.ButtonActivities.AddSubjectDialog
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.SubjectAdapter
@@ -20,7 +21,7 @@ import com.example.studygroup.data.UserDataHandler
 import com.example.studygroup.databinding.ActivityFindClassBinding
 import com.example.studygroup.main.MainActivity
 
-class FindClassActivity : AppCompatActivity() {
+class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
 
     private lateinit var binding:ActivityFindClassBinding
     private lateinit var  subjectsRV:RecyclerView
@@ -79,6 +80,15 @@ class FindClassActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.search_menu,menu)
         val searchItem = menu?.findItem(R.id.search)
 
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.add_class)
+        {
+            showAddSubjectDialog()
+        }
         return true
     }
     private fun buildRecyclerView(){
@@ -89,6 +99,11 @@ class FindClassActivity : AppCompatActivity() {
         subjectsRV.layoutManager = manager
         subjectsRV.adapter = adapter
 
+    }
+
+    fun showAddSubjectDialog()
+    {
+        AddSubjectDialog().show(supportFragmentManager,"Dialog")
     }
 
 
