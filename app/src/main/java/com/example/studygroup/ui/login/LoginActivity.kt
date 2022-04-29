@@ -30,9 +30,10 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null)
         {
             User = currentUser
-            val user = UserDataHandler.getUser(User.uid)
-            SubjectUserUtils.setUser(user)
+            UserDataHandler.getUser(User.uid)
+            //SubjectUserUtils.setUser(user)
             LaunchMainActivity()
+
 
 
         }
@@ -102,8 +103,8 @@ class LoginActivity : AppCompatActivity() {
             {
                 User = task.result!!.user!!
                 Toast.makeText(this,"Login Successfull!",Toast.LENGTH_SHORT).show()
-                val user = UserDataHandler.getUser(User.uid)
-                SubjectUserUtils.setUser(user)
+                 UserDataHandler.getUser(User.uid)
+                //SubjectUserUtils.setUser(user)
                 LaunchMainActivity()
 
             }

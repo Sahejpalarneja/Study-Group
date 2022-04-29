@@ -20,9 +20,9 @@ class UserDataHandler {
             user.UserID?.let { ref.child(it).child("Username").setValue(user.Username) }
             user.UserID?.let { ref.child(it).child("Classes").setValue(ArrayList<String>()) }
         }
-        fun getUser(UserID:String):User
+        fun getUser(UserID:String)
         {
-            val list = arrayListOf<String>()
+            val list = arrayListOf<String>("NEPTUN")
             var currentUser: User = User("AFA1bYYLV1WYvjhVPXOXSfCHAQe2","test",list)
             ref.addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -38,15 +38,18 @@ class UserDataHandler {
                             val classes = user.child("Classes").value
                             System.out.println(classes)
                             currentUser = User(ID,name,classes as ArrayList<String>)
-                            break
+                            SubjectUserUtils.setUser(currentUser)
+                            return
                         }
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
                 }
+
             })
-            return currentUser
+            SubjectUserUtils.setUser(currentUser)
+            return
         }
 
         fun joinClass(userID:String?,NEPTUN:String,enrolledClasses:ArrayList<String>?):Boolean

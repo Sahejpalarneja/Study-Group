@@ -48,12 +48,13 @@ class MainActivity : AppCompatActivity(){
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem) :Boolean {
         if(item.itemId == R.id.find_class)
         { val intent = Intent()
             intent.setClass(this,FindClassActivity::class.java)
             startActivity(intent)
             return true
+
         }
         else if(item.itemId == R.id.logout)
         {
@@ -61,7 +62,8 @@ class MainActivity : AppCompatActivity(){
             val intent = Intent()
             intent.setClass(this,LoginActivity::class.java)
             startActivity(intent)
-            return true
+
+           return true
         }
 
     return true

@@ -46,6 +46,7 @@ class SubjectAdapter(private val context : Context,subjects: List<Subjects>) :Re
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)
 
+
             }
             else {
 
@@ -54,6 +55,7 @@ class SubjectAdapter(private val context : Context,subjects: List<Subjects>) :Re
                 val mainIntent = Intent()
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)
+
             }
 
         }
