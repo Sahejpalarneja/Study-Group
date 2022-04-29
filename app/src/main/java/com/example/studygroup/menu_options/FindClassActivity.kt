@@ -1,12 +1,11 @@
 package com.example.studygroup.menu_options
 
 import android.content.Context
-import android.content.Intent
-import android.os.Binder
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
+
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -19,7 +18,7 @@ import com.example.studygroup.data.SubjectDataHandler
 import com.example.studygroup.data.Subjects
 import com.example.studygroup.data.UserDataHandler
 import com.example.studygroup.databinding.ActivityFindClassBinding
-import com.example.studygroup.main.MainActivity
+
 
 class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
 
@@ -29,7 +28,7 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
     private lateinit var subjects:ArrayList<Subjects>
     private lateinit var enrolledClasses : ArrayList<String>
     private lateinit var userID : String
-   // private var enrolledClasses = intent.getStringArra yListExtra("classes")
+
 
     companion object{
         private  var enrolledClasses = SubjectUserUtils.getUser().Classes
@@ -39,9 +38,16 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         fun setContext(context : Context){
             this.context = context
         }
+        fun getContext():Context{
+            return this.context
+        }
         fun checkIfEnrolled(NEPTUN:String): Boolean
         {
             for(i in enrolledClasses!!) {
+                if(i.isNullOrBlank())
+                {
+                    continue
+                }
                 if (i.equals(NEPTUN))
                     return true
             }

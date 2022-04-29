@@ -4,8 +4,7 @@ import com.example.studygroup.data.Subjects
 import com.example.studygroup.data.User
 
 class SubjectUserUtils {
-    private lateinit var subjects : ArrayList<Subjects>
-    private lateinit var user : User
+
 
 
     companion object{
