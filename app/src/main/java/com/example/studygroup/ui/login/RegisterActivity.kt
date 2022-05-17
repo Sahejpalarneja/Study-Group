@@ -58,12 +58,7 @@ import com.example.studygroup.data.UserDataHandler
      {
          val intent = Intent(this,MainActivity::class.java)
          intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-         val username = FirstName+" "+LastName
-         val user = User(User.uid,username, ArrayList<String>())
-         intent.putExtra("UserID",user.UserID)
-         intent.putExtra("Username",user.Username)
-         intent.putExtra("Classes",user.Classes)
-         UserDataHandler.writeUser(user)
+
          startActivity(intent)
          finish()
      }
@@ -138,7 +133,7 @@ import com.example.studygroup.data.UserDataHandler
              {
                  User = task.result!!.user!!
                  Toast.makeText(this,"Registration Successfull!",Toast.LENGTH_SHORT).show()
-
+                 UserDataHandler.getUser(User.uid)
                  LaunchMainActivity()
 
              }
