@@ -11,6 +11,7 @@ class UserClassesAdapter(private val context: Context,classes :List<Subjects>):R
     private var classes = mutableListOf<Subjects>()
     init{
         this.classes.addAll(classes)
+
     }
     override fun onCreateViewHolder(parent : ViewGroup,viewtype:Int):ViewHolder{
         return ViewHolder(

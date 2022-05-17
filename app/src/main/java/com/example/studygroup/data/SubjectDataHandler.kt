@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 
 import com.google.firebase.ktx.Firebase
+import javax.security.auth.Subject
 
 @Suppress("UNCHECKED_CAST")
 class SubjectDataHandler {
@@ -31,15 +32,22 @@ class SubjectDataHandler {
                     while (subjects.hasNext()) {
                         var subject =subjects.next()
                         var code = subject.child("neptun").value
-                        var name = subject.child("name").value
+                        var name = subject.key
                         var professors = subject.child("professors").value
                         var students = subject.child("students").value// listOf(subjects.next().children)[0]
-                        Subjects.add(Subjects(
-                            code.toString(),
-                            name.toString(),
-                            professors as ArrayList<String>,
-                            students as ArrayList<String>
-                        ))
+                        try {
+                            Subjects.add(
+                                Subjects(
+                                    code.toString(),
+                                    name.toString(),
+                                    professors as ArrayList<String>,
+                                    students as ArrayList<String>
+                                )
+                            )
+                        }
+                        catch (ex:NullPointerException){
+                            continue
+                        }
                     }
                 }
 
@@ -90,8 +98,33 @@ class SubjectDataHandler {
 
         fun writeSubject(newSubject:Subjects)
         {
-            Subjects.add(newSubject)
-            ref.setValue(Subjects)
+            ref.child(newSubject.name.toString())
+            ref.child(newSubject.name.toString()).child("neptun").setValue(newSubject.NEPTUN)
+            ref.child(newSubject.name.toString()).child("professors").setValue(newSubject.professors )
+            ref.child(newSubject.name.toString()).child("students").setValue(newSubject.students)
+
+        }
+        fun getClass(NEPTUN:String):Subjects{
+            var result =  Subjects(" "," ", ArrayList<String>(), ArrayList<String>())
+            for(subject in Subjects)
+            {
+                if(subject.NEPTUN.toString()  == NEPTUN)
+                {
+                    result= subject;
+                }
+            }
+            return result
+
+        }
+        fun writeUsertoSubject(subject:String,userID:String)
+        {
+            var joinedSubject= getClass(subject )
+            var studentList = joinedSubject.students
+            studentList.add(userID)
+
+            ref.child(joinedSubject.name!!).child("students").setValue(studentList)
+
+
         }
     }
 

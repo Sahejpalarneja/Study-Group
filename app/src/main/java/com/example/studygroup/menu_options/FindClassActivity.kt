@@ -98,7 +98,7 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         return true
     }
     private fun buildRecyclerView(){
-        subjects = SubjectDataHandler.Subjects
+        subjects = SubjectDataHandler.Subjects.distinctBy { it.NEPTUN } as ArrayList<Subjects>
         adapter = SubjectAdapter(this,subjects)
 
         val manager = LinearLayoutManager(this)
