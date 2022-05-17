@@ -55,6 +55,7 @@ class UserDataHandler {
             enrolledClasses?.add(NEPTUN)
             if (userID != null) {
                 ref.child(userID).child("Classes").setValue(enrolledClasses)
+                SubjectDataHandler.writeUsertoSubject(NEPTUN,SubjectUserUtils.getUser().Username.toString())
                 SubjectUserUtils.setUser(User(userID,SubjectUserUtils.getUser().Username,enrolledClasses))
                 return true
             }

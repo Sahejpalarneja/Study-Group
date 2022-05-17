@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(){
     }
     private fun buildRecyclerView(userClasses:ArrayList<String>?)
     {
-        classes = SubjectDataHandler.getUserClasses(userClasses)
+        classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subjects>
         adapter = UserClassesAdapter(this,classes)
 
        val manager = LinearLayoutManager(this)
