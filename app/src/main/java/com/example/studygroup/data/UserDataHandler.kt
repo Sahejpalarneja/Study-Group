@@ -34,9 +34,7 @@ class UserDataHandler {
                         if(ID.equals(UserID))
                         {
                             val name  = user.child("Username").value.toString()
-                            System.out.println(name)
                             val classes = user.child("Classes").value
-                            System.out.println(classes)
                             currentUser = User(ID,name,classes as ArrayList<String>)
                             SubjectUserUtils.setUser(currentUser)
                             return

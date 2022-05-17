@@ -91,9 +91,6 @@ class SubjectDataHandler {
         fun writeSubject(newSubject:Subjects)
         {
             Subjects.add(newSubject)
-            System.out.println(Subjects)
-            System.out.println("PAUse")
-
             ref.setValue(Subjects)
         }
     }
