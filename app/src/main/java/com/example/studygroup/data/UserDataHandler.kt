@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.lang.NullPointerException
 
 class UserDataHandler {
     companion object {
@@ -34,10 +35,22 @@ class UserDataHandler {
                         if(ID.equals(UserID))
                         {
                             val name  = user.child("Username").value.toString()
-                            val classes = user.child("Classes").value
-                            currentUser = User(ID,name,classes as ArrayList<String>)
-                            SubjectUserUtils.setUser(currentUser)
-                            return
+                            try{
+                                val classes = user.child("Classes").value
+                                currentUser = User(ID,name,classes as ArrayList<String>)
+                                SubjectUserUtils.setUser(currentUser)
+                                return
+                            }
+                            catch(ex:NullPointerException)
+                            {
+                                val classes = ArrayList<String>()
+                                currentUser = User(ID,name,classes as ArrayList<String>)
+                                SubjectUserUtils.setUser(currentUser)
+                                return
+                            }
+
+
+
                         }
                     }
                 }

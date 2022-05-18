@@ -5,9 +5,13 @@
       <map>
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable/border.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable/ic_search.xml" value="0.2765625" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable/message_background.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/drawable/message_background_receive.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.11746987951807229" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout-w936dp/activity_login.xml" value="0.137109375" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/activity_chat.xml" value="0.2423469387755102" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/activity_find_class.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/activity_join.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/activity_login.xml" value="0.22" />
@@ -16,6 +20,8 @@
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/activity_splash_screen.xml" value="0.10144927536231885" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/add_subject_dialog.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/class_card.xml" value="0.22" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/receive_message.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/sent_layout.xml" value="0.20989583333333334" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/layout/subject_card.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/menu/join_class_menu.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Lenovo/Desktop/School/Project-Lab/app/src/main/res/menu/options_menu.xml" value="0.203125" />
