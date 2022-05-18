@@ -55,6 +55,7 @@ class MessageAdapter(val context: Context,messageList :ArrayList<Message>):Recyc
            val viewHolder = holder as SentViewHolder
 
            holder.binding.tvSentMessage.text = currentMessage.message
+           holder.binding.tvUsername.text = SubjectUserUtils.getUser().Username.toString()
        }
         else{
            val viewHolder = holder as ReceiveViewHolder
