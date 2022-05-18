@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.Chat.ChatActivity
-import com.example.studygroup.data.Subjects
+import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ClassCardBinding
 
-class UserClassesAdapter(private val context: Context,classes :List<Subjects>):RecyclerView.Adapter<UserClassesAdapter.ViewHolder>() {
-    private var classes = mutableListOf<Subjects>()
+class UserClassesAdapter(private val context: Context,classes :List<Subject>):RecyclerView.Adapter<UserClassesAdapter.ViewHolder>() {
+    private var classes = mutableListOf<Subject>()
     init{
         this.classes.addAll(classes)
 
