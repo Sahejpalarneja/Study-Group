@@ -5,15 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studygroup.data.Subjects
-import com.example.studygroup.data.UserDataHandler
+import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.SubjectCardBinding
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.menu_options.FindClassActivity
 
-class SubjectAdapter(private val context : Context,subjects: List<Subjects>) :RecyclerView.Adapter<SubjectAdapter.ViewHolder>(){
+class SubjectAdapter(private val context : Context,subjects: List<Subject>) :RecyclerView.Adapter<SubjectAdapter.ViewHolder>(){
 
-        private var subjects = mutableListOf<Subjects>()
+        private var subjects = mutableListOf<Subject>()
         init{
            this.subjects.addAll(subjects)
         }

@@ -1,6 +1,6 @@
 package com.example.studygroup.ButtonActivities
 
-import com.example.studygroup.data.Subjects
+import com.example.studygroup.data.Subject
 import com.example.studygroup.data.User
 
 class SubjectUserUtils {
@@ -8,10 +8,10 @@ class SubjectUserUtils {
 
 
     companion object{
-        private lateinit var subjects : ArrayList<Subjects>
+        private lateinit var subjects : ArrayList<Subject>
         private lateinit var user : User
 
-        fun setSubjects(subjects:ArrayList<Subjects>)
+        fun setSubjects(subjects:ArrayList<Subject>)
         {
             this.subjects = subjects
         }
@@ -19,7 +19,7 @@ class SubjectUserUtils {
         {
             this.user = user
         }
-        fun getSubjects(): ArrayList<Subjects> {
+        fun getSubjects(): ArrayList<Subject> {
             return this.subjects
         }
         fun getUser(): User {
