@@ -6,7 +6,6 @@ import android.content.ContentValues.TAG
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 
 import android.util.Log
-import android.widget.Toast
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,13 +13,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 
 import com.google.firebase.ktx.Firebase
-import javax.security.auth.Subject
 
 @Suppress("UNCHECKED_CAST")
 class SubjectDataHandler {
 
     companion object {
-        var  Subjects = ArrayList<Subjects>()
+        var  Subjects = ArrayList<com.example.studygroup.data.Subject>()
         val database = Firebase.database("https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/")
         val ref = database.getReference("Subjects")
 
@@ -37,7 +35,7 @@ class SubjectDataHandler {
                         var students = subject.child("students").value// listOf(subjects.next().children)[0]
                         try {
                             Subjects.add(
-                                Subjects(
+                                Subject(
                                     code.toString(),
                                     name.toString(),
                                     professors as ArrayList<String>,
@@ -82,8 +80,8 @@ class SubjectDataHandler {
                 }
             }
         }
-        fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subjects> {
-            val result = ArrayList<Subjects>()
+        fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<com.example.studygroup.data.Subject> {
+            val result = ArrayList<com.example.studygroup.data.Subject>()
             if (userClasses != null) {
                 for(i in userClasses) {
                     for(j in Subjects) {
@@ -96,7 +94,7 @@ class SubjectDataHandler {
             return result
         }
 
-        fun writeSubject(newSubject:Subjects)
+        fun writeSubject(newSubject: com.example.studygroup.data.Subject)
         {
             ref.child(newSubject.name.toString())
             ref.child(newSubject.name.toString()).child("neptun").setValue(newSubject.NEPTUN)
@@ -104,8 +102,8 @@ class SubjectDataHandler {
             ref.child(newSubject.name.toString()).child("students").setValue(newSubject.students)
 
         }
-        fun getClass(NEPTUN:String):Subjects{
-            var result =  Subjects(" "," ", ArrayList<String>(), ArrayList<String>())
+        fun getClass(NEPTUN:String): com.example.studygroup.data.Subject {
+            var result = Subject(" "," ", ArrayList<String>(), ArrayList<String>())
             for(subject in Subjects)
             {
                 if(subject.NEPTUN.toString()  == NEPTUN)
