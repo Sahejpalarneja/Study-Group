@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
 import com.example.studygroup.data.SubjectDataHandler
-import com.example.studygroup.data.Subjects
-import com.example.studygroup.data.User
+import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
 import com.example.studygroup.ui.login.LoginActivity
@@ -21,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
-    private  lateinit var classes : ArrayList<Subjects>
+    private  lateinit var classes : ArrayList<Subject>
     private lateinit var classesRV : RecyclerView
     private lateinit var adapter : UserClassesAdapter
 
@@ -70,7 +68,7 @@ class MainActivity : AppCompatActivity(){
     }
     private fun buildRecyclerView(userClasses:ArrayList<String>?)
     {
-        classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subjects>
+        classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subject>
         adapter = UserClassesAdapter(this,classes)
 
        val manager = LinearLayoutManager(this)
