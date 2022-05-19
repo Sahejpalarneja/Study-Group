@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
-import com.example.studygroup.data.SubjectDataHandler
+import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.databinding.ActivitySplashScreenBinding
-import com.example.studygroup.ui.login.LoginActivity
+import com.example.studygroup.login.LoginActivity
 
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {

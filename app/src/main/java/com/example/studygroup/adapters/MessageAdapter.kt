@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.data.Message
 
 import com.example.studygroup.databinding.ReceiveMessageBinding

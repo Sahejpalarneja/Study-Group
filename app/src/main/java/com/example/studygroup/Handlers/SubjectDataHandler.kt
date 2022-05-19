@@ -1,11 +1,12 @@
 
 
-package com.example.studygroup.data
+package com.example.studygroup.Handlers
 
 import android.content.ContentValues.TAG
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
 
 import android.util.Log
+import com.example.studygroup.data.Subject
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 class SubjectDataHandler {
 
     companion object {
-        var  Subjects = ArrayList<com.example.studygroup.data.Subject>()
+        var  Subjects = ArrayList<Subject>()
         val database = Firebase.database("https://study-group-c445e-default-rtdb.europe-west1.firebasedatabase.app/")
         val ref = database.getReference("Subjects")
 
@@ -80,8 +81,8 @@ class SubjectDataHandler {
                 }
             }
         }
-        fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<com.example.studygroup.data.Subject> {
-            val result = ArrayList<com.example.studygroup.data.Subject>()
+        fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subject> {
+            val result = ArrayList<Subject>()
             if (userClasses != null) {
                 for(i in userClasses) {
                     for(j in Subjects) {
@@ -94,7 +95,7 @@ class SubjectDataHandler {
             return result
         }
 
-        fun writeSubject(newSubject: com.example.studygroup.data.Subject)
+        fun writeSubject(newSubject: Subject)
         {
             ref.child(newSubject.name.toString())
             ref.child(newSubject.name.toString()).child("neptun").setValue(newSubject.NEPTUN)
@@ -102,7 +103,7 @@ class SubjectDataHandler {
             ref.child(newSubject.name.toString()).child("students").setValue(newSubject.students)
 
         }
-        fun getClass(NEPTUN:String): com.example.studygroup.data.Subject {
+        fun getClass(NEPTUN:String): Subject {
             var result = Subject(" "," ", ArrayList<String>(), ArrayList<String>())
             for(subject in Subjects)
             {

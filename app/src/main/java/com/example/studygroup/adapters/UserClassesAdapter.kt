@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.Chat.ChatActivity
 import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.data.Subject

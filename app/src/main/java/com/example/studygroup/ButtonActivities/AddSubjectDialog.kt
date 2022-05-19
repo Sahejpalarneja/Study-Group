@@ -7,11 +7,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import com.example.studygroup.data.SubjectDataHandler
-import com.example.studygroup.data.UserDataHandler
+import com.example.studygroup.Handlers.SubjectDataHandler
+import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.databinding.AddSubjectDialogBinding
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.menu_options.FindClassActivity
+import com.example.studygroup.utils.SubjectUserUtils
 
 class AddSubjectDialog:DialogFragment() {
 
@@ -73,7 +74,9 @@ class AddSubjectDialog:DialogFragment() {
 
                     val newSubject= com.example.studygroup.data.Subject(etSubjectCode.text.toString(),etSubjectName.text.toString(),professorList,students)
                     SubjectDataHandler.writeSubject(newSubject)
-                    UserDataHandler.joinClass(SubjectUserUtils.getUser().UserID,etSubjectCode.text.toString(),SubjectUserUtils.getUser().Classes,)
+                    UserDataHandler.joinClass(
+                        SubjectUserUtils.getUser().UserID,etSubjectCode.text.toString(),
+                        SubjectUserUtils.getUser().Classes,)
                     val mainIntent = Intent()
                     mainIntent.setClass(FindClassActivity.Companion.getContext(),MainActivity::class.java)
                     startActivity(mainIntent)

@@ -13,15 +13,11 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.ButtonActivities.SubjectDetails
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.R
 import com.example.studygroup.adapters.MessageAdapter
 import com.example.studygroup.databinding.ActivityChatBinding
-import com.example.studygroup.menu_options.FindClassActivity
-import com.example.studygroup.ui.login.LoginActivity
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class ChatActivity : AppCompatActivity() {
@@ -62,7 +58,7 @@ class ChatActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener{
             val message = messageBox.text.toString()
-            val messageObject = Message(message,SubjectUserUtils.getUser().UserID)
+            val messageObject = Message(message, SubjectUserUtils.getUser().UserID)
             MessageDataHandler.writeMessage(code,messageObject)
             messageBox.setText("")
             adapter.notifyDataSetChanged()

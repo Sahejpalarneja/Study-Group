@@ -1,12 +1,11 @@
-package com.example.studygroup.ui.login
+package com.example.studygroup.login
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
-import com.example.studygroup.data.UserDataHandler
+import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.main.MainActivity
 
 import com.example.studygroup.databinding.ActivityLoginBinding
