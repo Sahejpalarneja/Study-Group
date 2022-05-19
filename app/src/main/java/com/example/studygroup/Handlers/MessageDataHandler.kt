@@ -18,9 +18,11 @@ class MessageDataHandler {
         {
             ref.child("Data").child(code!!).child("messages").push()
                 .setValue(message)
+            messages.add(message)
         }
         fun loadMessages(code: String?)
         {
+
             ref.child("Data").child(code!!).child("messages")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -34,7 +36,7 @@ class MessageDataHandler {
                         }
                         catch(ex:NullPointerException )
                         {
-                            messages = ArrayList(
+                            messages= ArrayList(
                             )
                         }
 
@@ -47,6 +49,7 @@ class MessageDataHandler {
                     }
 
                 })
+
         }
 
 
