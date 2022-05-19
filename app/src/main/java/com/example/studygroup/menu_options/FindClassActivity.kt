@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.ButtonActivities.AddSubjectDialog
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.SubjectAdapter
-import com.example.studygroup.data.SubjectDataHandler
+import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.data.Subject
-import com.example.studygroup.data.UserDataHandler
+import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.databinding.ActivityFindClassBinding
 
 

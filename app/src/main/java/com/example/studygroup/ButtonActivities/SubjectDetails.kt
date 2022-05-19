@@ -2,14 +2,11 @@ package com.example.studygroup.ButtonActivities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.adapters.StudentAdapter
-import com.example.studygroup.adapters.UserClassesAdapter
-import com.example.studygroup.data.Subject
-import com.example.studygroup.data.SubjectDataHandler
 import com.example.studygroup.databinding.ActivitySubjectDetailsBinding
+import com.example.studygroup.utils.SubjectUserUtils
 
 class SubjectDetails : AppCompatActivity() {
     private lateinit var binding :ActivitySubjectDetailsBinding

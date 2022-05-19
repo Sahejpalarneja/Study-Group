@@ -1,9 +1,9 @@
-package com.example.studygroup.data
+package com.example.studygroup.Handlers
 
 import android.content.ContentValues
 import android.util.Log
-import android.widget.Toast
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
+import com.example.studygroup.data.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -68,8 +68,12 @@ class UserDataHandler {
             enrolledClasses?.add(NEPTUN)
             if (userID != null) {
                 ref.child(userID).child("Classes").setValue(enrolledClasses)
-                SubjectDataHandler.writeUsertoSubject(NEPTUN,SubjectUserUtils.getUser().Username.toString())
-                SubjectUserUtils.setUser(User(userID,SubjectUserUtils.getUser().Username,enrolledClasses))
+                SubjectDataHandler.writeUsertoSubject(
+                    NEPTUN,
+                    SubjectUserUtils.getUser().Username.toString()
+                )
+                SubjectUserUtils.setUser(User(userID,
+                    SubjectUserUtils.getUser().Username,enrolledClasses))
                 return true
             }
             else{

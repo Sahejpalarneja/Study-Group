@@ -6,14 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studygroup.ButtonActivities.SubjectUserUtils
+import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
-import com.example.studygroup.data.SubjectDataHandler
+import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
-import com.example.studygroup.ui.login.LoginActivity
+import com.example.studygroup.login.LoginActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

@@ -1,4 +1,4 @@
- package com.example.studygroup.ui.login
+ package com.example.studygroup.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
-import com.example.studygroup.data.User
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-import com.example.studygroup.data.UserDataHandler
+import com.example.studygroup.Handlers.UserDataHandler
 
 
  class RegisterActivity : AppCompatActivity() {

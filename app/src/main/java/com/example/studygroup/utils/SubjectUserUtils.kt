@@ -1,4 +1,4 @@
-package com.example.studygroup.ButtonActivities
+package com.example.studygroup.utils
 
 import com.example.studygroup.data.Subject
 import com.example.studygroup.data.User
@@ -13,17 +13,17 @@ class SubjectUserUtils {
 
         fun setSubjects(subjects:ArrayList<Subject>)
         {
-            this.subjects = subjects
+            Companion.subjects = subjects
         }
         fun setUser(user:User)
         {
-            this.user = user
+            Companion.user = user
         }
         fun getSubjects(): ArrayList<Subject> {
-            return this.subjects
+            return subjects
         }
         fun getUser(): User {
-            return this.user
+            return user
         }
         fun getSubjectFromCode(code:String?):Subject {
             for(i in subjects)
