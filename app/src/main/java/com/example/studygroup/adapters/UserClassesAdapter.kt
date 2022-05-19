@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.Chat.ChatActivity
+import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ClassCardBinding
 
@@ -35,6 +36,7 @@ class UserClassesAdapter(private val context: Context,classes :List<Subject>):Re
 
         holder.binding.tvSubjectName.text = currentItem.name
         holder.itemView.setOnClickListener {
+            MessageDataHandler.loadMessages(currentItem.NEPTUN)
             val intent = Intent(context,ChatActivity::class.java)
             intent.putExtra("name",currentItem.name)
             intent.putExtra("code",currentItem.NEPTUN)
