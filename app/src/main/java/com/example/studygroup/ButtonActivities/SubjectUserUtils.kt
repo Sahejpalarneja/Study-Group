@@ -25,6 +25,16 @@ class SubjectUserUtils {
         fun getUser(): User {
             return this.user
         }
+        fun getSubjectFromCode(code:String?):Subject {
+            for(i in subjects)
+            {
+                if (i.NEPTUN.equals(code))
+                {
+                    return i
+                }
+            }
+            return Subject("","", ArrayList(), ArrayList())
+        }
 
     }
 

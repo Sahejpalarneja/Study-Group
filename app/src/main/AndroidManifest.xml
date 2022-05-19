@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudyGroup">
         <activity
+            android:name=".ButtonActivities.SubjectDetails"
+            android:exported="true" />
+        <activity
             android:name=".Chat.ChatActivity"
             android:exported="true" />
         <activity

@@ -1,24 +1,27 @@
 package com.example.studygroup.Chat
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.example.studygroup.data.Message
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studygroup.ButtonActivities.SubjectDetails
 import com.example.studygroup.ButtonActivities.SubjectUserUtils
 import com.example.studygroup.Handlers.MessageDataHandler
+import com.example.studygroup.R
 import com.example.studygroup.adapters.MessageAdapter
 import com.example.studygroup.databinding.ActivityChatBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
+import com.example.studygroup.menu_options.FindClassActivity
+import com.example.studygroup.ui.login.LoginActivity
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.lang.Thread.sleep
 
 
 class ChatActivity : AppCompatActivity() {
@@ -27,8 +30,13 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var sendButton:ImageButton
     private lateinit var binding: ActivityChatBinding
     private lateinit var adapter :MessageAdapter
+    private var code: String? = null
 
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.subject_details_menu,menu)
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
         val name = intent.getStringExtra("name")
         val code = intent.getStringExtra("code")
+        this.code =code
         supportActionBar?.title = name
 
 
@@ -61,6 +70,16 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem) :Boolean {
+        if(item.itemId == R.id.details)
+        { val intent = Intent()
+            intent.setClass(this, SubjectDetails::class.java)
+            intent.putExtra("code",code)
+            startActivity(intent)
+            return true
 
+        }
+        return true
     }
 }
