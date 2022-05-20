@@ -6,15 +6,21 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".Chat.ChatActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVMessages"
-        android:layout_above="@+id/MessageEditor"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_alignParentTop="true"
-         />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVMessages"
+            android:layout_above="@+id/MessageEditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+             />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/MessageEditor"

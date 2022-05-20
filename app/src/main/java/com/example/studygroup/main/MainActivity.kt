@@ -6,10 +6,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
 import com.example.studygroup.Handlers.SubjectDataHandler
+import com.example.studygroup.adapters.MessageAdapter
 import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var adapter : UserClassesAdapter
 
     private var userClasses :ArrayList<String>? = null
+    private lateinit var refreshListener: SwipeRefreshLayout.OnRefreshListener
 
 
 
@@ -43,6 +47,15 @@ class MainActivity : AppCompatActivity(){
 
         classesRV = binding.recyclerItem
         buildRecyclerView(userClasses)
+
+        refreshListener = SwipeRefreshLayout.OnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing= true
+            supportActionBar?.title = SubjectUserUtils.getUser().Username
+            buildRecyclerView(userClasses)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
     }
 

@@ -12,6 +12,7 @@ import android.widget.ImageButton
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.studygroup.ButtonActivities.SubjectDetails
 import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.Handlers.MessageDataHandler
@@ -27,6 +28,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
     private lateinit var adapter :MessageAdapter
     private var code: String? = null
+    private lateinit var refreshListener:SwipeRefreshLayout.OnRefreshListener
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,8 +64,18 @@ class ChatActivity : AppCompatActivity() {
             MessageDataHandler.writeMessage(code,messageObject)
             messageBox.setText("")
             adapter.notifyDataSetChanged()
+            binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
         }
+        refreshListener = SwipeRefreshLayout.OnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing= true
+            adapter = MessageAdapter(this,MessageDataHandler.messages)
+            messageRV.layoutManager = LinearLayoutManager(this)
+            messageRV.adapter = adapter
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
 
 
     }
