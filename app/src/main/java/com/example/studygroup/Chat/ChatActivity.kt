@@ -58,7 +58,7 @@ class ChatActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener{
             val message = messageBox.text.toString()
-            val messageObject = Message(message, SubjectUserUtils.getUser().UserID)
+            val messageObject = Message(message, SubjectUserUtils.getUser().Username)
             MessageDataHandler.writeMessage(code,messageObject)
             messageBox.setText("")
             adapter.notifyDataSetChanged()

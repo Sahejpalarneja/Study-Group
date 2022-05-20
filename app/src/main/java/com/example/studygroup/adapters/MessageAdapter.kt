@@ -24,7 +24,7 @@ class MessageAdapter(val context: Context,messageList :ArrayList<Message>):Recyc
         val sentMessage = binding.tvSentMessage
     }
     inner class ReceiveViewHolder(val binding:ReceiveMessageBinding):RecyclerView.ViewHolder(binding.root){
-        val recievedMessage = binding.tvRecievedMessage
+        val recievedMessage = binding.tvReceivedMessage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -55,18 +55,20 @@ class MessageAdapter(val context: Context,messageList :ArrayList<Message>):Recyc
            val viewHolder = holder as SentViewHolder
 
            holder.binding.tvSentMessage.text = currentMessage.message
-           holder.binding.tvUsername.text = SubjectUserUtils.getUser().Username.toString()
+           holder.binding.tvUsername.text = currentMessage.username
        }
         else{
            val viewHolder = holder as ReceiveViewHolder
-           holder.binding.tvRecievedMessage.text =currentMessage.message
+
+           holder.binding.tvReceivedMessage.text =currentMessage.message
+           holder.binding.tvUsername.text = currentMessage.username
             //do stuff for receive
        }
     }
 
     override fun getItemViewType(position: Int): Int {
        val currentMessage = messageList[position]
-        if(SubjectUserUtils.getUser().UserID.equals(currentMessage.senderId))
+        if(SubjectUserUtils.getUser().Username.equals(currentMessage.username))
         {
             return  ITEM_SENT
         }
