@@ -64,7 +64,8 @@ class ChatActivity : AppCompatActivity() {
             MessageDataHandler.writeMessage(code,messageObject)
             messageBox.setText("")
             adapter.notifyDataSetChanged()
-            binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
+            refresh()
+
 
         }
         refreshListener = SwipeRefreshLayout.OnRefreshListener {
@@ -89,5 +90,10 @@ class ChatActivity : AppCompatActivity() {
 
         }
         return true
+    }
+    fun refresh(){
+        adapter = MessageAdapter(this,MessageDataHandler.messages)
+        messageRV.layoutManager = LinearLayoutManager(this)
+        messageRV.adapter = adapter
     }
 }
