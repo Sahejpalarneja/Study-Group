@@ -11,6 +11,7 @@ import com.example.studygroup.databinding.ActivityRegisterBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.example.studygroup.data.User
 
 import com.example.studygroup.Handlers.UserDataHandler
 
@@ -38,7 +39,9 @@ import com.example.studygroup.Handlers.UserDataHandler
             {
                 if(ValidateCredentials())
                 {
+
                     FirebaseSignUp(Email,Password)
+
                 }
             }
 
@@ -130,7 +133,10 @@ import com.example.studygroup.Handlers.UserDataHandler
          mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener { task ->
              if (task.isSuccessful)
              {
-                 User = task.result!!.user!!
+                 this.User = task.result!!.user!!
+                 var user  = User(User.uid,FirstName+" "+LastName, ArrayList())
+                 UserDataHandler.writeUser(user)
+
                  Toast.makeText(this,"Registration Successfull!",Toast.LENGTH_SHORT).show()
                  UserDataHandler.getUser(User.uid)
                  LaunchMainActivity()
