@@ -5,13 +5,21 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
-import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.main.MainActivity
 
 import com.example.studygroup.databinding.ActivityLoginBinding
+import com.example.studygroup.models.AuthUser
+import com.example.studygroup.models.LoginUser
+import com.example.studygroup.models.Message
+import com.example.studygroup.models.Token
+import com.example.studygroup.network.RetrofitClient
+import com.example.studygroup.utils.SubjectUserUtils
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,13 +27,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var Email:String
+    private lateinit var Username:String
     private lateinit var Password:String
     private lateinit var User:FirebaseUser
 
     override fun onStart() {
         super.onStart()
-        val currentUser = mAuth.currentUser
+        /*val currentUser = mAuth.currentUser
         if(currentUser != null)
         {
             User = currentUser
@@ -36,11 +44,13 @@ class LoginActivity : AppCompatActivity() {
 
 
         }
+
+         */
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAuth = FirebaseAuth.getInstance()
+
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin?.setOnClickListener {
             if(ValidateInput())
             {
-                FirebaseLogIn(Email, Password)
+                login(Username,Password )
             }
         }
 
@@ -57,9 +67,6 @@ class LoginActivity : AppCompatActivity() {
             intent.setClass(this,RegisterActivity::class.java)
             startActivity(intent)
         }
-
-
-
     }
 
     fun LaunchMainActivity()
@@ -76,42 +83,73 @@ class LoginActivity : AppCompatActivity() {
     fun ValidateInput():Boolean
     {
 
-        Email = binding.etEmail!!.text.toString().trim{it <=' '}
+        Username = binding.etUsername!!.text.toString().trim{it <=' '}
         Password= binding.etPassword!!.text.toString().trim{it <=' '}
 
         when {
-            TextUtils.isEmpty(Email)-> {
-                Toast.makeText(this, "Please Enter email", Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(Username)-> {
+                Toast.makeText(this, "Please Enter Username", Toast.LENGTH_SHORT).show()
                 return false
             }
             TextUtils.isEmpty(Password) -> {
                 Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show()
                 return false
             }
-            Email.isNotEmpty()  && Password.isNotEmpty()  -> {
+            Username.isNotEmpty()  && Password.isNotEmpty()  -> {
                 return true
             }
 
         }
         return false
     }
+    fun login(username:String,password:String){
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://study-group-2.herokuapp.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val loginAPI = retrofit.create(RetrofitClient::class.java)
+        val loginCall = loginAPI.login(LoginUser(username,password))
+        loginCall.enqueue(object:retrofit2.Callback<Token>{
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                Toast.makeText(this@LoginActivity,"Could not login credentials wrong",Toast.LENGTH_LONG).show()
+            }
 
-    fun FirebaseLogIn(Email: String, Password: String){
-        mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener { task ->
-            if (task.isSuccessful)
-            {
-                User = task.result!!.user!!
-                Toast.makeText(this,"Login Successfull!",Toast.LENGTH_SHORT).show()
-                 UserDataHandler.getUser(User.uid)
-                //SubjectUserUtils.setUser(user)
+            override fun onResponse(call: Call<Token>, response: retrofit2.Response<Token>) {
+                val token = response.body()?.token
+                val currentUser = AuthUser(Username,token)
+                SubjectUserUtils.setUser(currentUser)
                 LaunchMainActivity()
 
             }
-            else
-            {
-                Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()
-            }
-        }
+        })
+
     }
+    fun messages()
+    {
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://study-group-2.herokuapp.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val userAPI = retrofit.create(RetrofitClient::class.java)
+        val messageCall = userAPI.get_messages()
+        messageCall.enqueue(object:retrofit2.Callback<ArrayList<Message>>{
+            override fun onFailure(call: Call<ArrayList<Message>>, t: Throwable) {
+                Toast.makeText(this@LoginActivity,t.message,Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(
+                call: Call<ArrayList<Message>>,
+                response: retrofit2.Response<ArrayList<Message>>
+            ) {
+                var m_response  = response.body()
+                Toast.makeText(this@LoginActivity, m_response?.get(0)?.text,Toast.LENGTH_LONG).show()
+
+            }
+        })
+
+    }
+
+
 }
 
