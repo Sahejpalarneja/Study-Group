@@ -1,23 +1,23 @@
 package com.example.studygroup.login
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
+
 import com.example.studygroup.main.MainActivity
 
 import com.example.studygroup.databinding.ActivityLoginBinding
-import com.example.studygroup.models.AuthUser
-import com.example.studygroup.models.LoginUser
-import com.example.studygroup.models.Message
-import com.example.studygroup.models.Token
+import com.example.studygroup.models.*
 import com.example.studygroup.network.RetrofitClient
 import com.example.studygroup.utils.SubjectUserUtils
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,27 +26,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var Username:String
     private lateinit var Password:String
-    private lateinit var User:FirebaseUser
 
-    override fun onStart() {
-        super.onStart()
-        /*val currentUser = mAuth.currentUser
-        if(currentUser != null)
-        {
-            User = currentUser
-            UserDataHandler.getUser(User.uid)
-            //SubjectUserUtils.setUser(user)
-            LaunchMainActivity()
-
-
-
-        }
-
-         */
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
         val loginAPI = retrofit.create(RetrofitClient::class.java)
         val loginCall = loginAPI.login(LoginUser(username,password))
-        loginCall.enqueue(object:retrofit2.Callback<Token>{
+        loginCall.enqueue(object:Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
                 Toast.makeText(this@LoginActivity,"Could not login credentials wrong",Toast.LENGTH_LONG).show()
             }
@@ -118,11 +100,37 @@ class LoginActivity : AppCompatActivity() {
                 val token = response.body()?.token
                 val currentUser = AuthUser(Username,token)
                 SubjectUserUtils.setUser(currentUser)
+                setAllSubjects()
                 LaunchMainActivity()
 
             }
         })
 
+    }
+    fun setAllSubjects(){
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://study-group-2.herokuapp.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val subjectAPI = retrofit.create(RetrofitClient::class.java)
+
+        val subjectCall = subjectAPI.getSubjects()
+        subjectCall.enqueue(object : Callback<ArrayList<Subject>> {
+            override fun onFailure(call: Call<ArrayList<Subject>>, t: Throwable) {
+
+                Log.e(ContentValues.TAG, "Failed to read value.",t.cause)
+            }
+
+            override fun onResponse(
+                call: Call<ArrayList<Subject>>,
+                response: Response<ArrayList<Subject>>
+            ) {
+                val Subjects = response.body()!!
+                Log.i(ContentValues.TAG,"Subjects initialized")
+                SubjectUserUtils.setSubjects(Subjects)
+
+            }
+        })
     }
     fun messages()
     {
