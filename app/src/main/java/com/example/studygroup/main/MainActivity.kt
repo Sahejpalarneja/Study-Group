@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.studygroup.Handlers.MessageDataHandler
+
 import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
-import com.example.studygroup.Handlers.SubjectDataHandler
-import com.example.studygroup.adapters.MessageAdapter
+
 import com.example.studygroup.data.Subject
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
@@ -41,21 +41,22 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = SubjectUserUtils.getUser().Username
-        userClasses = SubjectUserUtils.getUser().Classes
+        supportActionBar?.title = SubjectUserUtils.getUser().username
+        //userClasses = SubjectUserUtils.getUser().Classes
 
 
         classesRV = binding.recyclerItem
-        buildRecyclerView(userClasses)
+        //buildRecyclerView(userClasses)
 
         refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing= true
-            supportActionBar?.title = SubjectUserUtils.getUser().Username
+            supportActionBar?.title = SubjectUserUtils.getUser().username
             buildRecyclerView(userClasses)
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
+        Toast.makeText(this,SubjectUserUtils.getUser().id,Toast.LENGTH_LONG).show()
 
     }
 
@@ -81,8 +82,8 @@ class MainActivity : AppCompatActivity(){
     }
     private fun buildRecyclerView(userClasses:ArrayList<String>?)
     {
-        classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subject>
-        adapter = UserClassesAdapter(this,classes)
+        //classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subject>
+        //adapter = UserClassesAdapter(this,classes)
 
        val manager = LinearLayoutManager(this)
         classesRV.layoutManager = manager

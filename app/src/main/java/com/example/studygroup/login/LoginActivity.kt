@@ -33,6 +33,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var Username:String
     private lateinit var Password:String
 
+    val client  =  OkHttpClient.Builder()
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://study-group-2.herokuapp.com/api/")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    val API = retrofit.create(RetrofitClient::class.java)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,32 +101,48 @@ class LoginActivity : AppCompatActivity() {
         return false
     }
     fun login(username:String,password:String){
-        val client  =  OkHttpClient.Builder()
-            .addNetworkInterceptor(StethoInterceptor())
-            .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://study-group-2.herokuapp.com/api/")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val loginAPI = retrofit.create(RetrofitClient::class.java)
-        val loginCall = loginAPI.login(LoginUser(username,password))
+
+        val loginCall = this.API.login(LoginUser(username,password))
         loginCall.enqueue(object:Callback<Token>{
             override fun onFailure(call: Call<Token>, t: Throwable) {
                 Toast.makeText(this@LoginActivity,"Could not login credentials wrong",Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<Token>, response: retrofit2.Response<Token>) {
-                val token = response.body()?.token
-                val currentUser = AuthUser(Username,token)
-                SubjectUserUtils.setUser(currentUser)
-                LaunchMainActivity()
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                if (response.isSuccessful) {
+                    val token = response.body()?.token.toString()
+                    setUser(Username,token)
+                }
+                else
+                {
+                    Toast.makeText(this@LoginActivity, "Credentials wrong",Toast.LENGTH_LONG).show()
+                }
 
             }
         })
 
     }
 
+    fun setUser(Username:String,token:String)
+    {
+        val header = "Token "+token
+        val IdCall = this.API.getUserID(header,username = Username)
+        IdCall.enqueue(object :Callback<Id>{
+            override fun onFailure(call: Call<Id>, t: Throwable) {
+                Toast.makeText(this@LoginActivity,t.message,Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<Id>, response: Response<Id>) {
+                val Id = response.body()
+                Toast.makeText(this@LoginActivity,Id?.id,Toast.LENGTH_LONG).show()
+                val currentUser = AuthUser(Username,token,Id?.id)
+                SubjectUserUtils.setUser(currentUser)
+                LaunchMainActivity()
+
+
+            }
+        })
+    }
     fun messages()
     {
 
