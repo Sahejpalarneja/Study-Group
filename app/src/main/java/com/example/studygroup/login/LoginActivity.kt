@@ -1,13 +1,11 @@
 package com.example.studygroup.login
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.Log
 import android.widget.Toast
-import com.example.studygroup.Handlers.SubjectDataHandler
+
 
 import com.example.studygroup.main.MainActivity
 
