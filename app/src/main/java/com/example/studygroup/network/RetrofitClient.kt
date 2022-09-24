@@ -19,4 +19,9 @@ public interface RetrofitClient {
         @GET("subjects")
         fun getSubjects():Call<ArrayList<Subject>>
 
+        @GET("get_id")
+        fun getUserID(@Header("Authorization")token:String,@Query("username")username:String):Call<Id>
+
+        @GET("get_user_subjects")
+        fun getUserSubjects(@Header("Authorization")token:String,@Query("id")id:Int):Call<ArrayList<Subject>>
 }
