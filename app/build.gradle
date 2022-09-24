@@ -80,7 +80,11 @@ dependencies {
     implementation group: "org.http4k", name: "http4k-core", version: "4.30.9.0"
 
     //Network Debug
-    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+    implementation 'com.facebook.stetho:stetho:1.6.0'
+
+    // for OkHttp3, if you're using an older version,
+    // check the stetho website
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
 
 
 }
