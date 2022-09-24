@@ -1,4 +1,5 @@
 package com.example.studygroup.splashscreen
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import okhttp3.OkHttpClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
+@SuppressLint("CustomSplashScreen")
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity(){
     private lateinit var binding: ActivitySplashScreenBinding
@@ -26,6 +28,7 @@ class SplashScreen : AppCompatActivity(){
         Stetho.initializeWithDefaults(this)
         setAllSubjects()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -44,7 +47,8 @@ class SplashScreen : AppCompatActivity(){
         )
 
     }
-   fun setAllSubjects(){
+
+    private fun setAllSubjects(){
         val client  =  OkHttpClient.Builder()
             .addNetworkInterceptor(StethoInterceptor())
             .build()

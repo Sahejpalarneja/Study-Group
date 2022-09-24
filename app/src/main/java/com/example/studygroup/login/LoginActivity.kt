@@ -27,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var Username:String
@@ -43,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         .build()
     val API = retrofit.create(RetrofitClient::class.java)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Stetho.initializeWithDefaults(this)
@@ -51,38 +49,31 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnLogin?.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             if(ValidateInput())
             {
                 login(Username,Password )
             }
         }
 
-        binding.btnRegister?.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             val intent = Intent()
             intent.setClass(this,RegisterActivity::class.java)
             startActivity(intent)
         }
-        var temp = SubjectDataHandler.getSubjects()[0]
-        Toast.makeText(this,temp.name,Toast.LENGTH_LONG).show()
+
     }
 
-    fun LaunchMainActivity()
-    {
+    fun LaunchMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-
-
         startActivity(intent)
         finish()
     }
 
-    fun ValidateInput():Boolean
-    {
-
-        Username = binding.etUsername!!.text.toString().trim{it <=' '}
-        Password= binding.etPassword!!.text.toString().trim{it <=' '}
+    fun ValidateInput():Boolean {
+        Username = binding.etUsername.text.toString().trim{it <=' '}
+        Password= binding.etPassword.text.toString().trim{it <=' '}
 
         when {
             TextUtils.isEmpty(Username)-> {
@@ -100,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
         }
         return false
     }
+
     fun login(username:String,password:String){
 
         val loginCall = this.API.login(LoginUser(username,password))
@@ -123,8 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun setUser(Username:String,token:String)
-    {
+    fun setUser(Username:String,token:String) {
         val header = "Token "+token
         val IdCall = this.API.getUserID(header,username = Username)
         IdCall.enqueue(object :Callback<Id>{
@@ -145,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
     fun setUserSubjects(){
         val header = "Token "+SubjectUserUtils.getUser().token
         val UserSubjectCall = this.API.getUserSubjects(header, SubjectUserUtils.getUser().id!!.toInt())
@@ -165,32 +157,5 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    fun messages()
-    {
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://study-group-2.herokuapp.com/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val userAPI = retrofit.create(RetrofitClient::class.java)
-        val messageCall = userAPI.get_messages()
-        messageCall.enqueue(object:retrofit2.Callback<ArrayList<Message>>{
-            override fun onFailure(call: Call<ArrayList<Message>>, t: Throwable) {
-                Toast.makeText(this@LoginActivity,t.message,Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<Message>>,
-                response: Response<ArrayList<Message>>
-            ) {
-                var m_response  = response.body()
-                Toast.makeText(this@LoginActivity, m_response?.get(0)?.text,Toast.LENGTH_LONG).show()
-
-            }
-        })
-
-    }
-
-
 }
 
