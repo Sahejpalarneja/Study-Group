@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studygroup.data.Subject
+import com.example.studygroup.models.Subject
 import com.example.studygroup.databinding.SubjectCardBinding
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.menu_options.FindClassActivity
@@ -31,16 +31,16 @@ class SubjectAdapter(private val context : Context,subjects: List<Subject>) :Rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = subjects[position]
-        val members = getMemberCount(currentItem.students)
+        //val members = getMemberCount(currentItem.students)
         holder.binding.tvSubjectName.text = currentItem.name
-        holder.binding.tvSubjectCode.text = currentItem.NEPTUN
-        holder.binding.tvProfessor.text = currentItem.professors[0]
-        holder.binding.tvMembers.text =members.toString()
+        holder.binding.tvSubjectCode.text = currentItem.neptun
+        holder.binding.tvProfessor.text = currentItem.professor
+        //holder.binding.tvMembers.text =members.toString()
         holder.binding.btnJoin.setOnClickListener {
 
-            if(!FindClassActivity.checkIfEnrolled(currentItem.NEPTUN))
+            if(!FindClassActivity.checkIfEnrolled(currentItem.neptun))
             {
-                val context = FindClassActivity.addClass(currentItem.NEPTUN)
+                val context = FindClassActivity.addClass(currentItem.neptun)
                 val mainIntent = Intent()
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)

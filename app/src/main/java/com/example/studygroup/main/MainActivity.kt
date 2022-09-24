@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(){
         }
         else if(item.itemId == R.id.logout)
         {
-            //Firebase.auth.signOut()
+
             val intent = Intent()
             intent.setClass(this,LoginActivity::class.java)
             startActivity(intent)

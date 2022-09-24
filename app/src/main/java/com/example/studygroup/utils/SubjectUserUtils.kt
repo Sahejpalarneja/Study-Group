@@ -1,5 +1,6 @@
 package com.example.studygroup.utils
 
+import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.models.Subject
 import com.example.studygroup.models.AuthUser
 
@@ -11,12 +12,10 @@ class SubjectUserUtils {
         private lateinit var subjects : ArrayList<Subject>
         private lateinit var user : AuthUser
 
-        fun setSubjects(subjects:ArrayList<Subject>)
-        {
+        fun setSubjects(subjects:ArrayList<Subject>){
             Companion.subjects = subjects
         }
-        fun setUser(user: AuthUser)
-        {
+        fun setUser(user: AuthUser) {
             Companion.user = user
         }
         fun getSubjects(): ArrayList<Subject> {
@@ -41,6 +40,20 @@ class SubjectUserUtils {
                 result.add(i.name)
             }
             return result
+        }
+        fun checkDuplicate(code:String):Boolean {
+            if(subjects.isEmpty())
+            {
+                return false
+            }
+            for(i in subjects)
+            {
+                if(code == i.neptun)
+                {
+                    return true
+                }
+            }
+            return false
         }
 
     }

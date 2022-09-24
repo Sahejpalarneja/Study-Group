@@ -15,24 +15,41 @@ import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.SubjectAdapter
 import com.example.studygroup.Handlers.SubjectDataHandler
-import com.example.studygroup.data.Subject
+import com.example.studygroup.models.Subject
 import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.databinding.ActivityFindClassBinding
+
+import com.example.studygroup.network.RetrofitClient
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
 
     private lateinit var binding:ActivityFindClassBinding
+
     private lateinit var  subjectsRV:RecyclerView
     private lateinit var adapter:SubjectAdapter
     private lateinit var subjects:ArrayList<Subject>
-    private lateinit var enrolledClasses : ArrayList<String>
-    private lateinit var userID : String
+
+    val client = OkHttpClient.Builder()
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://study-group-2.herokuapp.com/api/")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    val API = retrofit.create(RetrofitClient::class.java)
+
 
 
     companion object{
-        private  var enrolledClasses = SubjectUserUtils.getUser().Classes
-        private  var userID  = SubjectUserUtils.getUser().UserID
+        private  var enrolledClasses = SubjectUserUtils.getSubjects()
+        private  var userID  = SubjectUserUtils.getUser().id
         private lateinit var context:Context
 
         fun setContext(context : Context){
@@ -41,21 +58,21 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         fun getContext():Context{
             return this.context
         }
-        fun checkIfEnrolled(NEPTUN:String): Boolean
+        fun checkIfEnrolled(neptun:String): Boolean
         {
-            for(i in enrolledClasses!!) {
-                if(i.isNullOrBlank())
+            for(i in enrolledClasses) {
+                if(SubjectUserUtils.checkDuplicate(neptun))
                 {
                     continue
                 }
-                if (i.equals(NEPTUN))
+                if (i.equals(neptun))
                     return true
             }
             return false
         }
-        fun addClass(NEPTUN: String) :Context
+        fun addClass(neptun: String) :Context
         {
-            if(UserDataHandler.joinClass(userID,NEPTUN, enrolledClasses))
+            if(UserDataHandler.joinClass(userID,neptun, enrolledClasses))
             {
                 return context
             }
@@ -98,7 +115,7 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         return true
     }
     private fun buildRecyclerView(){
-        subjects = SubjectDataHandler.Subjects.distinctBy { it.NEPTUN } as ArrayList<Subject>
+        subjects = SubjectDataHandler.getSubjects()
         adapter = SubjectAdapter(this,subjects)
 
         val manager = LinearLayoutManager(this)
@@ -110,6 +127,10 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
     fun showAddSubjectDialog()
     {
         AddSubjectDialog().show(supportFragmentManager,"Dialog")
+    }
+    fun joinSubject(){
+
+
     }
 
 
