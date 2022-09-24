@@ -13,12 +13,11 @@ import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.UserClassesAdapter
 
-import com.example.studygroup.data.Subject
+import com.example.studygroup.models.Subject
 import com.example.studygroup.databinding.ActivityMainBinding
 import com.example.studygroup.menu_options.FindClassActivity
 import com.example.studygroup.login.LoginActivity
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
@@ -42,21 +41,21 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = SubjectUserUtils.getUser().username
-        //userClasses = SubjectUserUtils.getUser().Classes
+        userClasses = SubjectUserUtils.getSubjectNames()
 
 
         classesRV = binding.recyclerItem
-        //buildRecyclerView(userClasses)
+        buildRecyclerView()
 
         refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing= true
             supportActionBar?.title = SubjectUserUtils.getUser().username
-            buildRecyclerView(userClasses)
+            buildRecyclerView()
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
-        Toast.makeText(this,SubjectUserUtils.getUser().id,Toast.LENGTH_LONG).show()
+        Toast.makeText(this,SubjectUserUtils.getSubjects()[0].name,Toast.LENGTH_LONG).show()
 
     }
 
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity(){
         }
         else if(item.itemId == R.id.logout)
         {
-            Firebase.auth.signOut()
+            //Firebase.auth.signOut()
             val intent = Intent()
             intent.setClass(this,LoginActivity::class.java)
             startActivity(intent)
@@ -80,10 +79,10 @@ class MainActivity : AppCompatActivity(){
 
     return true
     }
-    private fun buildRecyclerView(userClasses:ArrayList<String>?)
+    private fun buildRecyclerView()
     {
-        //classes = SubjectDataHandler.getUserClasses(userClasses).distinctBy { it.NEPTUN } as ArrayList<Subject>
-        //adapter = UserClassesAdapter(this,classes)
+        classes = SubjectUserUtils.getSubjects()
+        adapter = UserClassesAdapter(this,classes)
 
        val manager = LinearLayoutManager(this)
         classesRV.layoutManager = manager

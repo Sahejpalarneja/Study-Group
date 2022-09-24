@@ -137,8 +137,30 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity,Id?.id,Toast.LENGTH_LONG).show()
                 val currentUser = AuthUser(Username,token,Id?.id)
                 SubjectUserUtils.setUser(currentUser)
+                setUserSubjects()
+                Thread.sleep(2000)
                 LaunchMainActivity()
 
+
+            }
+        })
+    }
+    fun setUserSubjects(){
+        val header = "Token "+SubjectUserUtils.getUser().token
+        val UserSubjectCall = this.API.getUserSubjects(header, SubjectUserUtils.getUser().id!!.toInt())
+        UserSubjectCall.enqueue(object : Callback<ArrayList<Subject>>{
+            override fun onFailure(call: Call<ArrayList<Subject>>, t: Throwable) {
+                Toast.makeText(this@LoginActivity,"Problem retrieving subjects",Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(
+                call: Call<ArrayList<Subject>>,
+                response: Response<ArrayList<Subject>>
+            ) {
+                val subjects = response.body()
+                if (subjects != null) {
+                    SubjectUserUtils.setSubjects(subjects)
+                }
 
             }
         })
