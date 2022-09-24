@@ -1,7 +1,6 @@
 package com.example.studygroup.utils
 
 import com.example.studygroup.models.Subject
-import com.example.studygroup.data.User
 import com.example.studygroup.models.AuthUser
 
 class SubjectUserUtils {
@@ -35,6 +34,13 @@ class SubjectUserUtils {
                 }
             }
             return Subject("","", "")
+        }
+        fun getSubjectNames():ArrayList<String>{
+            var result = ArrayList<String>()
+            for(i in subjects){
+                result.add(i.name)
+            }
+            return result
         }
 
     }
