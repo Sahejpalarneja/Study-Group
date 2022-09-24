@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import com.example.studygroup.Handlers.SubjectDataHandler
 
 import com.example.studygroup.main.MainActivity
 
@@ -14,6 +15,9 @@ import com.example.studygroup.databinding.ActivityLoginBinding
 import com.example.studygroup.models.*
 import com.example.studygroup.network.RetrofitClient
 import com.example.studygroup.utils.SubjectUserUtils
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.OkHttpClient
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Stetho.initializeWithDefaults(this)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -49,6 +53,8 @@ class LoginActivity : AppCompatActivity() {
             intent.setClass(this,RegisterActivity::class.java)
             startActivity(intent)
         }
+        var temp = SubjectDataHandler.getSubjects()[0]
+        Toast.makeText(this,temp.name,Toast.LENGTH_LONG).show()
     }
 
     fun LaunchMainActivity()
@@ -85,8 +91,12 @@ class LoginActivity : AppCompatActivity() {
         return false
     }
     fun login(username:String,password:String){
+        val client  =  OkHttpClient.Builder()
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://study-group-2.herokuapp.com/api/")
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val loginAPI = retrofit.create(RetrofitClient::class.java)
@@ -100,38 +110,13 @@ class LoginActivity : AppCompatActivity() {
                 val token = response.body()?.token
                 val currentUser = AuthUser(Username,token)
                 SubjectUserUtils.setUser(currentUser)
-                setAllSubjects()
                 LaunchMainActivity()
 
             }
         })
 
     }
-    fun setAllSubjects(){
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://study-group-2.herokuapp.com/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val subjectAPI = retrofit.create(RetrofitClient::class.java)
 
-        val subjectCall = subjectAPI.getSubjects()
-        subjectCall.enqueue(object : Callback<ArrayList<Subject>> {
-            override fun onFailure(call: Call<ArrayList<Subject>>, t: Throwable) {
-
-                Log.e(ContentValues.TAG, "Failed to read value.",t.cause)
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<Subject>>,
-                response: Response<ArrayList<Subject>>
-            ) {
-                val Subjects = response.body()!!
-                Log.i(ContentValues.TAG,"Subjects initialized")
-                SubjectUserUtils.setSubjects(Subjects)
-
-            }
-        })
-    }
     fun messages()
     {
 
@@ -148,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onResponse(
                 call: Call<ArrayList<Message>>,
-                response: retrofit2.Response<ArrayList<Message>>
+                response: Response<ArrayList<Message>>
             ) {
                 var m_response  = response.body()
                 Toast.makeText(this@LoginActivity, m_response?.get(0)?.text,Toast.LENGTH_LONG).show()
