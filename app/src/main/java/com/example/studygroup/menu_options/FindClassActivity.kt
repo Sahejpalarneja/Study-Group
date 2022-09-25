@@ -18,7 +18,6 @@ import com.example.studygroup.R
 import com.example.studygroup.adapters.SubjectAdapter
 import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.models.Subject
-import com.example.studygroup.Handlers.UserDataHandler
 import com.example.studygroup.databinding.ActivityFindClassBinding
 import com.example.studygroup.models.Response
 
@@ -40,7 +39,6 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
     private lateinit var subjects:ArrayList<Subject>
 
     companion object {
-        private var enrolledClasses = SubjectUserUtils.getSubjects()
         private var userID = SubjectUserUtils.getUser().id
         val client = OkHttpClient.Builder()
             .addNetworkInterceptor(StethoInterceptor())
@@ -104,6 +102,12 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         buildRecyclerView()
         setContext(this)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu,menu)
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

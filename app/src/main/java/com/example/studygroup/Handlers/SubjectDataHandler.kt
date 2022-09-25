@@ -3,6 +3,7 @@ package com.example.studygroup.Handlers
 import com.example.studygroup.models.Subject
 
 
+
 @Suppress("UNCHECKED_CAST")
 class SubjectDataHandler {
 
@@ -31,6 +32,21 @@ class SubjectDataHandler {
 
         fun addSubject(newSubject:Subject){
             Subjects.add(newSubject)
+        }
+
+        fun checkDuplicate(code:String):Boolean {
+            if(Subjects.isEmpty())
+            {
+                return false
+            }
+            for(i in Subjects)
+            {
+                if(code == i.neptun)
+                {
+                    return true
+                }
+            }
+            return false
         }
 
     }
