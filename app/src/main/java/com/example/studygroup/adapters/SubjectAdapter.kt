@@ -13,11 +13,13 @@ import com.example.studygroup.utils.SubjectUserUtils
 
 class SubjectAdapter(private val context : Context,subjects: List<Subject>) :RecyclerView.Adapter<SubjectAdapter.ViewHolder>(){
 
-        private var subjects = mutableListOf<Subject>()
-        init{
+    private var subjects = mutableListOf<Subject>()
+
+    init{
            this.subjects.addAll(subjects)
         }
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
                 SubjectCardBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -26,6 +28,7 @@ class SubjectAdapter(private val context : Context,subjects: List<Subject>) :Rec
                 )
             )
         }
+
     override fun getItemCount(): Int {
         return subjects.size
     }
@@ -47,16 +50,13 @@ class SubjectAdapter(private val context : Context,subjects: List<Subject>) :Rec
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)
 
-
             }
             else {
-
                 //TODO add error message
                 val context = FindClassActivity.alreadyEnrolled()
                 val mainIntent = Intent()
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)
-
             }
 
         }
