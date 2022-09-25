@@ -3,9 +3,8 @@
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
     <string name="prompt_repeat_password">Repeat Password</string>
-    <string name="prompt_first_name">Enter first name</string>
-    <string name="prompt_last_name">Enter last name</string>
     <string name="Register">Register</string>
     <string name="action_sign_in_short">Log in</string>
     <string name="No_account">Don\'t have account?</string>

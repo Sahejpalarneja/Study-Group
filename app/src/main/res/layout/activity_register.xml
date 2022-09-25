@@ -37,48 +37,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etFirstName"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/border"
-            android:autofillHints="name"
-            android:hint="@string/prompt_first_name"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:selectAllOnFocus="true"
-            android:textAlignment="center"
-            android:textColor="@color/orange"
-            android:textColorHint="@color/orange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-        <EditText
-            android:id="@+id/etLastName"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/border"
-            android:hint="@string/prompt_last_name"
-            android:autofillHints="name"
-            android:inputType="text"
-            android:selectAllOnFocus="true"
-            android:textAlignment="center"
-            android:textColor="@color/orange"
-            android:textColorHint="@color/orange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:autofillHints="name"
+        android:background="@drawable/border"
+        android:hint="@string/prompt_username"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textColorHint="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-        <EditText
+    <EditText
             android:id="@+id/etEmail"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/border"
-            android:hint="@string/prompt_username"
+            android:hint="@string/prompt_email"
+            android:autofillHints="emailAddress"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             android:textAlignment="center"
@@ -86,7 +71,7 @@
             android:textColorHint="@color/orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etLastName" />
+            app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
         <EditText
             android:id="@+id/etPassword"
@@ -94,6 +79,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:hint="@string/prompt_password"
+            android:autofillHints="password"
             android:textColorHint="@color/orange"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -110,6 +96,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:hint="@string/prompt_repeat_password"
+            android:autofillHints="password"
             android:textColorHint="@color/orange"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -167,7 +154,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:foreground="?attr/selectableItemBackground"
             android:padding="5dp"
             android:text="@string/action_sign_in_short"
             android:textColor="@color/orange"
