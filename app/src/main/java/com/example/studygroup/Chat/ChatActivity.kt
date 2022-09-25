@@ -20,6 +20,8 @@ import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.R
 import com.example.studygroup.adapters.MessageAdapter
 import com.example.studygroup.databinding.ActivityChatBinding
+import com.example.studygroup.utils.SubjectUserUtils
+import com.example.studygroup.models.Message
 
 
 class ChatActivity : AppCompatActivity() {
@@ -64,9 +66,10 @@ class ChatActivity : AppCompatActivity() {
 
 
         sendButton.setOnClickListener{
-            val message = messageBox.text.toString()
-            //val messageObject = Message(message, SubjectUserUtils.getUser().Username)
-            //MessageDataHandler.writeMessage(code,messageObject)
+            val text = messageBox.text.toString()
+            MessageDataHandler.postMessage(SubjectUserUtils.getUser().username,text,SubjectUserUtils.getSubjectFromCode(code).neptun )
+            MessageDataHandler.loadMessages(SubjectUserUtils.getSubjectFromCode(code).neptun)
+            Thread.sleep(500)
             messageBox.setText("")
             adapter.notifyDataSetChanged()
             refresh()
@@ -75,6 +78,8 @@ class ChatActivity : AppCompatActivity() {
         }
         refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing= true
+            MessageDataHandler.loadMessages(SubjectUserUtils.getSubjectFromCode(code).neptun)
+            Thread.sleep(500)
             adapter = MessageAdapter(this,MessageDataHandler.messages)
             messageRV.layoutManager = LinearLayoutManager(this)
             messageRV.adapter = adapter
@@ -97,13 +102,10 @@ class ChatActivity : AppCompatActivity() {
         return true
     }
     fun refresh(){
+        Thread.sleep(1000)
         adapter = MessageAdapter(this,MessageDataHandler.messages)
         messageRV.layoutManager = LinearLayoutManager(this)
         messageRV.adapter = adapter
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
 }

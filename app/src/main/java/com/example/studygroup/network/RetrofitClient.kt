@@ -46,5 +46,5 @@ interface RetrofitClient {
         fun getSubjectMessages(@Header("Authorization")token: String,@Query("neptun")neptun: String):Call<ArrayList<Message>>
 
         @POST("send_message")
-        fun postSendMessage(@Header("Authorization")token: String,@Body body: RequestBody):Callback<Response>
+        fun postSendMessage(@Header("Authorization")token: String,@Body body: RequestBody):Call<Response>
 }
