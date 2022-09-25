@@ -32,7 +32,7 @@ interface RetrofitClient {
 
         @POST("join_class")
         fun postJoinClass(
-                @Header("Authorizatoin") token: String,
+                @Header("Authorization") token: String,
                 @Query("neptun") neptun: String,
                 @Query("id") id: Int
         ): Call<Response>
