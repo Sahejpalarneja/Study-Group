@@ -9,6 +9,7 @@ import com.example.studygroup.models.Subject
 import com.example.studygroup.databinding.SubjectCardBinding
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.menu_options.FindClassActivity
+import com.example.studygroup.utils.SubjectUserUtils
 
 class SubjectAdapter(private val context : Context,subjects: List<Subject>) :RecyclerView.Adapter<SubjectAdapter.ViewHolder>(){
 
@@ -38,9 +39,10 @@ class SubjectAdapter(private val context : Context,subjects: List<Subject>) :Rec
         //holder.binding.tvMembers.text =members.toString()
         holder.binding.btnJoin.setOnClickListener {
 
-            if(!FindClassActivity.checkIfEnrolled(currentItem.neptun))
+            if(!SubjectUserUtils.checkDuplicate(currentItem.neptun))
             {
-                val context = FindClassActivity.addClass(currentItem.neptun)
+                FindClassActivity.joinSubject(currentItem.neptun)
+                val context = FindClassActivity.getContext()
                 val mainIntent = Intent()
                 mainIntent.setClass(context,MainActivity::class.java)
                 context.startActivity(mainIntent)

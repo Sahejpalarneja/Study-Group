@@ -20,37 +20,12 @@ class SubjectDataHandler {
         {
             return Subjects
         }
-        /*
-        fun checkDuplicate(code:String):Boolean
-        {
-            if(Subjects.isEmpty())
-            {
-                return false
-            }
-            for(i in Subjects)
-            {
-                if(code == i.NEPTUN)
-                {
-                    return true
-                }
-            }
-            return false
-        }
-        fun FindSubject(query:String){
-            for(subject in Subjects)
-            {
-                if (query.equals(subject.name) or query.equals(subject.NEPTUN))
-                {
-
-                }
-            }
-        }
         fun getUserClasses(userClasses: ArrayList<String>?): ArrayList<Subject> {
             val result = ArrayList<Subject>()
             if (userClasses != null) {
                 for(i in userClasses) {
                     for(j in Subjects) {
-                        if (i == j.NEPTUN.toString()) {
+                        if (i == j.neptun) {
                             result.add(j)
                         }
                     }
@@ -58,7 +33,19 @@ class SubjectDataHandler {
             }
             return result
         }
+        fun getClassFromCode(neptun:String): Subject {
+            val result = Subject("","","")
+            for(subject in Subjects)
+            {
+                if(subject.neptun  == neptun)
+                {
+                    return subject
+                }
+            }
+            return result
 
+        }
+    /*
         fun writeSubject(newSubject: Subject)
         {
             ref.child(newSubject.name.toString())
@@ -67,18 +54,7 @@ class SubjectDataHandler {
             ref.child(newSubject.name.toString()).child("students").setValue(newSubject.students)
 
         }
-        fun getClass(NEPTUN:String): Subject {
-            var result = Subject(" "," ", ArrayList<String>(), ArrayList<String>())
-            for(subject in Subjects)
-            {
-                if(subject.NEPTUN.toString()  == NEPTUN)
-                {
-                    result= subject;
-                }
-            }
-            return result
 
-        }
         fun writeUsertoSubject(subject:String,userID:String)
         {
             var joinedSubject= getClass(subject )

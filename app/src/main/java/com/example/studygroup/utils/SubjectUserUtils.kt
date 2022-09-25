@@ -1,6 +1,5 @@
 package com.example.studygroup.utils
 
-import com.example.studygroup.Handlers.SubjectDataHandler
 import com.example.studygroup.models.Subject
 import com.example.studygroup.models.AuthUser
 
@@ -15,15 +14,19 @@ class SubjectUserUtils {
         fun setSubjects(subjects:ArrayList<Subject>){
             Companion.subjects = subjects
         }
+
         fun setUser(user: AuthUser) {
             Companion.user = user
         }
+
         fun getSubjects(): ArrayList<Subject> {
             return subjects
         }
+
         fun getUser(): AuthUser {
             return user
         }
+
         fun getSubjectFromCode(code:String?):Subject {
             for(i in subjects)
             {
@@ -34,13 +37,15 @@ class SubjectUserUtils {
             }
             return Subject("","", "")
         }
+
         fun getSubjectNames():ArrayList<String>{
-            var result = ArrayList<String>()
+            val result = ArrayList<String>()
             for(i in subjects){
                 result.add(i.name)
             }
             return result
         }
+
         fun checkDuplicate(code:String):Boolean {
             if(subjects.isEmpty())
             {
@@ -54,6 +59,10 @@ class SubjectUserUtils {
                 }
             }
             return false
+        }
+
+        fun addUserSubject(joinedSubject: Subject) {
+            subjects.add(joinedSubject)
         }
 
     }
