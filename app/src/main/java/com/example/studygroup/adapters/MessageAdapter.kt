@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studygroup.utils.SubjectUserUtils
-import com.example.studygroup.data.Message
+import com.example.studygroup.models.Message
 
 import com.example.studygroup.databinding.ReceiveMessageBinding
 import com.example.studygroup.databinding.SentLayoutBinding
@@ -48,27 +48,26 @@ class MessageAdapter(val context: Context,messageList :ArrayList<Message>):Recyc
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var currentMessage:Message = messageList[position]
+        val currentMessage:Message = messageList[position]
        if(holder.javaClass == SentViewHolder::class.java){
-           //do the stufff
 
            val viewHolder = holder as SentViewHolder
 
-           holder.binding.tvSentMessage.text = currentMessage.message
-           holder.binding.tvUsername.text = currentMessage.username
+           holder.binding.tvSentMessage.text = currentMessage.text
+           holder.binding.tvUsername.text = currentMessage.sender
        }
         else{
            val viewHolder = holder as ReceiveViewHolder
 
-           holder.binding.tvReceivedMessage.text =currentMessage.message
-           holder.binding.tvUsername.text = currentMessage.username
+           holder.binding.tvReceivedMessage.text =currentMessage.text
+           holder.binding.tvUsername.text = currentMessage.sender
             //do stuff for receive
        }
     }
 
     override fun getItemViewType(position: Int): Int {
        val currentMessage = messageList[position]
-        if(SubjectUserUtils.getUser().Username.equals(currentMessage.username))
+        if(SubjectUserUtils.getUser().username.equals(currentMessage.sender))
         {
             return  ITEM_SENT
         }
@@ -80,4 +79,5 @@ class MessageAdapter(val context: Context,messageList :ArrayList<Message>):Recyc
     override fun getItemCount(): Int {
         return messageList.size
     }
+
 }

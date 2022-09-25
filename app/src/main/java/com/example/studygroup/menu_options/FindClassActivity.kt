@@ -1,5 +1,6 @@
 package com.example.studygroup.menu_options
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
@@ -15,61 +17,81 @@ import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.R
 import com.example.studygroup.adapters.SubjectAdapter
 import com.example.studygroup.Handlers.SubjectDataHandler
-import com.example.studygroup.data.Subject
-import com.example.studygroup.Handlers.UserDataHandler
+import com.example.studygroup.models.Subject
 import com.example.studygroup.databinding.ActivityFindClassBinding
+import com.example.studygroup.models.Response
+
+import com.example.studygroup.network.RetrofitClient
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
 
     private lateinit var binding:ActivityFindClassBinding
+
     private lateinit var  subjectsRV:RecyclerView
     private lateinit var adapter:SubjectAdapter
     private lateinit var subjects:ArrayList<Subject>
-    private lateinit var enrolledClasses : ArrayList<String>
-    private lateinit var userID : String
 
+    companion object {
+        private var userID = SubjectUserUtils.getUser().id
+        val client = OkHttpClient.Builder()
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
 
-    companion object{
-        private  var enrolledClasses = SubjectUserUtils.getUser().Classes
-        private  var userID  = SubjectUserUtils.getUser().UserID
-        private lateinit var context:Context
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://study-group-2.herokuapp.com/api/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val API = retrofit.create(RetrofitClient::class.java)
+        @SuppressLint("StaticFieldLeak")
+        private lateinit var context: Context
 
-        fun setContext(context : Context){
+        fun setContext(context: Context) {
             this.context = context
         }
-        fun getContext():Context{
+
+        fun getContext(): Context {
             return this.context
         }
-        fun checkIfEnrolled(NEPTUN:String): Boolean
-        {
-            for(i in enrolledClasses!!) {
-                if(i.isNullOrBlank())
-                {
-                    continue
+
+
+        fun joinSubject(neptun: String) {
+            val header = "Token "+SubjectUserUtils.getUser().token
+            val joinPOST = this.API.postJoinClass(header, neptun, userID!!.toInt())
+            joinPOST.enqueue(object : Callback<Response> {
+                override fun onFailure(call: Call<Response>, t: Throwable) {
+                    Toast.makeText(context, "Error in joining class", Toast.LENGTH_LONG).show()
                 }
-                if (i.equals(NEPTUN))
-                    return true
-            }
-            return false
-        }
-        fun addClass(NEPTUN: String) :Context
-        {
-            if(UserDataHandler.joinClass(userID,NEPTUN, enrolledClasses))
-            {
-                return context
-            }
-            else {
-                //TODO add error message
-                return context
-            }
+
+                override fun onResponse(
+                    call: Call<Response>,
+                    response: retrofit2.Response<Response>
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(
+                            context,
+                            response.body()?.message.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(context, "Error in joining class", Toast.LENGTH_LONG).show()
+                    }
+                }
+            })
+            val joinedSubject = SubjectDataHandler.getClassFromCode(neptun)
+            SubjectUserUtils.addUserSubject(joinedSubject)
         }
 
-        fun alreadyEnrolled():Context
-        {
+        fun alreadyEnrolled(): Context {
             return context
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,14 +100,12 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         setContentView(binding.root)
         subjectsRV = binding.RVSubjects
         buildRecyclerView()
-        FindClassActivity.Companion.setContext(this)
+        setContext(this)
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_menu,menu)
-        val searchItem = menu?.findItem(R.id.search)
-
 
         return true
     }
@@ -97,8 +117,9 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
         }
         return true
     }
+
     private fun buildRecyclerView(){
-        subjects = SubjectDataHandler.Subjects.distinctBy { it.NEPTUN } as ArrayList<Subject>
+        subjects = SubjectDataHandler.getSubjects()
         adapter = SubjectAdapter(this,subjects)
 
         val manager = LinearLayoutManager(this)
@@ -107,8 +128,7 @@ class FindClassActivity : AppCompatActivity(),AddSubjectDialog.SubjectHandler {
 
     }
 
-    fun showAddSubjectDialog()
-    {
+    fun showAddSubjectDialog() {
         AddSubjectDialog().show(supportFragmentManager,"Dialog")
     }
 
