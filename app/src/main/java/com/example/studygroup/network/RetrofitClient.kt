@@ -3,6 +3,7 @@ package com.example.studygroup.network
 import com.example.studygroup.models.*
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 
 import retrofit2.http.*
 
@@ -43,4 +44,7 @@ interface RetrofitClient {
 
         @GET("get_messages")
         fun getSubjectMessages(@Header("Authorization")token: String,@Query("neptun")neptun: String):Call<ArrayList<Message>>
+
+        @POST("send_message")
+        fun postSendMessage(@Header("Authorization")token: String,@Body body: RequestBody):Callback<Response>
 }
