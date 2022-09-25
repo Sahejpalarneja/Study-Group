@@ -27,7 +27,10 @@ class SubjectDataHandler {
                 }
             }
             return result
+        }
 
+        fun addSubject(newSubject:Subject){
+            Subjects.add(newSubject)
         }
 
     }

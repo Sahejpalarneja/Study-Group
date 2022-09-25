@@ -1,6 +1,7 @@
 package com.example.studygroup.network
 
 import com.example.studygroup.models.*
+import okhttp3.RequestBody
 import retrofit2.Call
 
 import retrofit2.http.*
@@ -36,4 +37,7 @@ interface RetrofitClient {
                 @Query("neptun") neptun: String,
                 @Query("id") id: Int
         ): Call<Response>
+
+        @POST("add_subject")
+        fun postAddSubject(@Header("Authorization")token:String,@Body body:RequestBody):Call<Response>
 }
