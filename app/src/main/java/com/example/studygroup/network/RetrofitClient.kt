@@ -10,8 +10,8 @@ import kotlin.collections.ArrayList
 
 interface RetrofitClient {
 
-        @GET("messages/mobileid")
-        fun get_messages(): Call<ArrayList<Message>>
+        @POST("register")
+        fun register(@Body body: RequestBody):Call<AuthUser>
 
         @POST("login")
         fun login(@Body login_user: LoginUser): Call<Token>

@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity(){
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
-        Toast.makeText(this,SubjectUserUtils.getSubjects()[0].name,Toast.LENGTH_LONG).show()
+        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener)
+
 
     }
 

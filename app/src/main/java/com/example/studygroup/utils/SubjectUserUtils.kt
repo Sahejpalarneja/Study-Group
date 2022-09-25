@@ -8,7 +8,7 @@ class SubjectUserUtils {
 
 
     companion object{
-        private lateinit var subjects : ArrayList<Subject>
+        private var subjects = ArrayList<Subject>()
         private lateinit var user : AuthUser
 
         fun setSubjects(subjects:ArrayList<Subject>){

@@ -1,46 +1,66 @@
  package com.example.studygroup.login
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.studygroup.main.MainActivity
 import com.example.studygroup.databinding.ActivityRegisterBinding
+import com.example.studygroup.models.AuthUser
+import com.example.studygroup.models.User
+import com.example.studygroup.network.RetrofitClient
+import com.example.studygroup.utils.SubjectUserUtils
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.MultipartBody
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.example.studygroup.data.User
+import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-import com.example.studygroup.Handlers.UserDataHandler
 
 
  class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-     private lateinit var mAuth: FirebaseAuth
-     private lateinit var FirstName:String
-     private lateinit var LastName:String
+
+     private lateinit var Username:String
      private lateinit var Email:String
      private lateinit var Password:String
      private lateinit var RepeatPassword:String
-     private lateinit var User :FirebaseUser
+
+
+     val client  =  OkHttpClient.Builder()
+         .addNetworkInterceptor(StethoInterceptor())
+         .build()
+     val retrofit = Retrofit.Builder()
+         .baseUrl("https://study-group-2.herokuapp.com/api/")
+         .client(client)
+         .addConverterFactory(GsonConverterFactory.create())
+         .build()
+     val API = retrofit.create(RetrofitClient::class.java)
+
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mAuth = FirebaseAuth.getInstance()
         binding.btnRegister.setOnClickListener {
 
             if (ValidateInput())
             {
                 if(ValidateCredentials())
                 {
+                    val user = User(Username,Email,Password,RepeatPassword)
+                    register(user)
 
-                    FirebaseSignUp(Email,Password)
 
                 }
             }
@@ -96,8 +116,7 @@ import com.example.studygroup.Handlers.UserDataHandler
      }
      fun ValidateInput():Boolean
      {
-         FirstName= binding.etFirstName.text.toString().trim{it <=' '}
-         LastName = binding.etLastName.text.toString().trim{it <=' '}
+         Username= binding.etUsername.text.toString().trim{it <=' '}
          Email = binding.etEmail.text.toString().trim{it <=' '}
          Password= binding.etPassword.text.toString().trim{it <=' '}
          RepeatPassword = binding.etRepeatPassword.text.toString().trim{it <=' '}
@@ -106,12 +125,8 @@ import com.example.studygroup.Handlers.UserDataHandler
                  Toast.makeText(this, "Please Enter email", Toast.LENGTH_SHORT).show()
                  return false
              }
-             TextUtils.isEmpty(FirstName) -> {
+             TextUtils.isEmpty(Username) -> {
                  Toast.makeText(this, "Please Enter First Name", Toast.LENGTH_SHORT).show()
-                 return false
-             }
-             TextUtils.isEmpty(LastName) -> {
-                 Toast.makeText(this, "Please Enter Last Name", Toast.LENGTH_SHORT).show()
                  return false
              }
              TextUtils.isEmpty(Password) -> {
@@ -122,33 +137,39 @@ import com.example.studygroup.Handlers.UserDataHandler
                  Toast.makeText(this, "Please Enter Password Again", Toast.LENGTH_SHORT).show()
                  return false
              }
-             Email.isNotEmpty() && FirstName.isNotEmpty() && LastName.isNotEmpty() && Password.isNotEmpty() && RepeatPassword.isNotEmpty() -> {
+             Email.isNotEmpty() && Username.isNotEmpty() && Password.isNotEmpty() && RepeatPassword.isNotEmpty() -> {
                  return true
              }
 
          }
          return false
      }
-     fun FirebaseSignUp(Email: String, Password: String){
-         mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener { task ->
-             if (task.isSuccessful)
-             {
-                 this.User = task.result!!.user!!
-                 var user  = User(User.uid,FirstName+" "+LastName, ArrayList())
-                 UserDataHandler.writeUser(user)
 
-                 Toast.makeText(this,"Registration Successfull!",Toast.LENGTH_SHORT).show()
-                 UserDataHandler.getUser(User.uid)
+
+     fun register(user:User){
+         val body=MultipartBody.Builder()
+             .setType(MultipartBody.FORM)
+             .addFormDataPart("username",user.username)
+             .addFormDataPart("email",user.email)
+             .addFormDataPart("password",user.password1)
+             .addFormDataPart("password2",user.password2)
+             .build()
+         val registerPost = this.API.register(body)
+         registerPost.enqueue(object: Callback<AuthUser> {
+             override fun onFailure(call: Call<AuthUser>, t: Throwable) {
+                 Log.i(TAG,"Registration failed")
+             }
+
+             override fun onResponse(call: Call<AuthUser>, response: Response<AuthUser>) {
+                 val newUser = response.body()
+                 Log.i(TAG,newUser!!.username+" Registered")
+                 Thread.sleep(2000)
+                 SubjectUserUtils.setUser(newUser)
                  LaunchMainActivity()
-
              }
-             else
-             {
 
-                 Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()
+         })
 
-             }
-         }
      }
 
 }
