@@ -39,7 +39,7 @@ class UserClassesAdapter(private val context: Context,classes :List<Subject>):Re
             val intent = Intent(context,ChatActivity::class.java)
             intent.putExtra("name",currentItem.name)
             intent.putExtra("code",currentItem.neptun)
-
+            Thread.sleep(1000)
             context.startActivity(intent)
         }
 

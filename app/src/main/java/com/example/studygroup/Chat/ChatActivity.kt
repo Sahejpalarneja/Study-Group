@@ -1,12 +1,13 @@
 package com.example.studygroup.Chat
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.example.studygroup.data.Message
+
 import android.widget.EditText
 import android.widget.ImageButton
 
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.studygroup.ButtonActivities.SubjectDetails
-import com.example.studygroup.utils.SubjectUserUtils
+
 import com.example.studygroup.Handlers.MessageDataHandler
 import com.example.studygroup.R
 import com.example.studygroup.adapters.MessageAdapter
@@ -36,6 +37,15 @@ class ChatActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onStart() {
+        super.onStart()
+        this.adapter =  MessageAdapter(this,MessageDataHandler.messages)
+        messageRV.layoutManager = LinearLayoutManager(this)
+        messageRV.adapter = adapter
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -51,16 +61,12 @@ class ChatActivity : AppCompatActivity() {
         messageBox = binding.etMessagebox
         sendButton = binding.btnSend
 
-        adapter = MessageAdapter(this,MessageDataHandler.messages)
-        messageRV.layoutManager = LinearLayoutManager(this)
-        messageRV.adapter = adapter
-
 
 
         sendButton.setOnClickListener{
             val message = messageBox.text.toString()
-            val messageObject = Message(message, SubjectUserUtils.getUser().Username)
-            MessageDataHandler.writeMessage(code,messageObject)
+            //val messageObject = Message(message, SubjectUserUtils.getUser().Username)
+            //MessageDataHandler.writeMessage(code,messageObject)
             messageBox.setText("")
             adapter.notifyDataSetChanged()
             refresh()
@@ -75,7 +81,7 @@ class ChatActivity : AppCompatActivity() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
+        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener)
 
 
     }
@@ -94,5 +100,10 @@ class ChatActivity : AppCompatActivity() {
         adapter = MessageAdapter(this,MessageDataHandler.messages)
         messageRV.layoutManager = LinearLayoutManager(this)
         messageRV.adapter = adapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }
