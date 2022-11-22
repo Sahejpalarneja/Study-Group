@@ -127,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
                 val currentUser = AuthUser(Username,token,Id?.id)
                 SubjectUserUtils.setUser(currentUser)
                 setUserSubjects()
-                Thread.sleep(2000)
+                Thread.sleep(1000)
                 LaunchMainActivity()
 
 
