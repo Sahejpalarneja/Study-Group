@@ -21,10 +21,10 @@ class SubjectDetails : AppCompatActivity() {
         val subject = SubjectUserUtils.getSubjectFromCode(code)
         binding.tvSubjectName.text =subject.name.toString()
         binding.tvSubjectCode.text = code
-        binding.tvProfessorName.text = subject.professors[0]
+        //binding.tvProfessorName.text = subject.professors[0]
 
         studentsRV = binding.RVStudents
-        buildRecyclerView(subject.students)
+        //buildRecyclerView(subject.students)
 
 
 
