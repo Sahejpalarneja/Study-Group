@@ -47,13 +47,14 @@ class MessageDataHandler {
             })
         }
 
-        fun postMessage(sender:String,text:String,N_code:String){
+        fun postMessage(sender:String,text:String,N_code:String,timestamp:String){
             val header = "Token "+SubjectUserUtils.getUser().token
             val body = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("sender",sender)
                 .addFormDataPart("text",text)
                 .addFormDataPart("N_code",N_code)
+                .addFormDataPart("timestamp",timestamp)
                 .build()
             val messagePost = this.API.postSendMessage(header,body)
             messagePost.enqueue(object :Callback<com.example.studygroup.models.Response>{
@@ -63,7 +64,7 @@ class MessageDataHandler {
                 }
 
                 override fun onResponse(call: Call<com.example.studygroup.models.Response>, response: Response<com.example.studygroup.models.Response>) {
-                    Log.i(TAG,response.body()!!.message)
+                    Log.i(TAG,"Sent")
                 }
             })
         }

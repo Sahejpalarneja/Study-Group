@@ -2,14 +2,19 @@ package com.example.studygroup.Chat
 
 
 import android.annotation.SuppressLint
+
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.view.Menu
 import android.view.MenuItem
 
 import android.widget.EditText
 import android.widget.ImageButton
+
+import androidx.annotation.RequiresApi
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +27,8 @@ import com.example.studygroup.adapters.MessageAdapter
 import com.example.studygroup.databinding.ActivityChatBinding
 import com.example.studygroup.utils.SubjectUserUtils
 import com.example.studygroup.models.Message
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class ChatActivity : AppCompatActivity() {
@@ -47,6 +54,7 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,14 +75,15 @@ class ChatActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener{
             val text = messageBox.text.toString()
-            MessageDataHandler.postMessage(SubjectUserUtils.getUser().username,text,SubjectUserUtils.getSubjectFromCode(code).neptun )
-            MessageDataHandler.loadMessages(SubjectUserUtils.getSubjectFromCode(code).neptun)
-            Thread.sleep(500)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val current = LocalDateTime.now().format(formatter)
+            val newMessage = Message(SubjectUserUtils.getUser().username,text,SubjectUserUtils.getSubjectFromCode(code).neptun,current)
+            MessageDataHandler.messages.add(newMessage)
+            adapter.notifyDataSetChanged()
             messageBox.setText("")
+            MessageDataHandler.postMessage(SubjectUserUtils.getUser().username,text,SubjectUserUtils.getSubjectFromCode(code).neptun,current )
             adapter.notifyDataSetChanged()
             refresh()
-
-
         }
         refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing= true
